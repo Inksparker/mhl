@@ -20,20 +20,20 @@ RUN npm run build
 FROM node:20-alpine
 WORKDIR /app
 
-# Copy backend
+# Copy backend (includes express in node_modules)
 COPY --from=backend /app/dist ./dist
 COPY --from=backend /app/node_modules ./node_modules
 COPY --from=backend /app/package.json ./
 
-# Serve frontend from backend
+# Copy frontend static files
 COPY --from=frontend-build /app/frontend/dist ./public
 
-# Add static file serving for the frontend
-RUN npm install express --save
+# Tells backend where to find the frontend
+ENV STATIC_DIR=/app/public
 
 EXPOSE 4000
 
-# Create storage directory
-RUN mkdir -p /app/storage
+# Create storage + ensure writable
+RUN mkdir -p /app/storage && chmod 777 /app/storage
 
 CMD ["node", "dist/index.js"]

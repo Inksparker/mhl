@@ -142,7 +142,7 @@ router.get('/:orgId/tables/:tableSlug/records', requireOrgAccess, async (req: Re
 
   res.json({
     records,
-    total: parseInt(countResult.rows[0].count, 10),
+    total: parseInt(String(countResult.rows[0].count), 10),
   });
 });
 
@@ -169,7 +169,7 @@ router.get('/:orgId/tables/:tableSlug/records/:recordId', requireOrgAccess, asyn
 
   if (shouldDecrypt === 'true' && row.encrypted_data) {
     try {
-      data = decryptJson(row.encrypted_data);
+      data = decryptJson(String(row.encrypted_data));
     } catch {
       // Return stored data if decryption fails
     }

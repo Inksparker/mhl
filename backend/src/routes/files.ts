@@ -173,7 +173,7 @@ router.get('/:orgId/files', requireOrgAccess, async (req: Request, res: Response
 
   res.json({
     files: result.rows,
-    total: parseInt(countResult.rows[0].count, 10),
+    total: parseInt(String(countResult.rows[0].count), 10),
   });
 });
 

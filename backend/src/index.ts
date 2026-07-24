@@ -51,13 +51,29 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // ─── Health Check ───────────────────────────────────────────────────
 
-app.get('/health', (_req, res) => {
-  res.json({
+app.get('/health', async (_req, res) => {
+  const health: Record<string, any> = {
     status: 'healthy',
     timestamp: new Date().toISOString(),
     version: '1.0.0',
+    uptime: process.uptime(),
+    mode: config.nodeEnv,
     syncEnabled: config.sync.enabled,
-  });
+    s3Configured: !!(config.storage.s3.accessKey && config.storage.s3.accessKey !== 'your-access-key'),
+    storagePath: config.storage.localPath,
+  };
+
+  // Quick DB check
+  try {
+    const { pool } = require('./services/db');
+    await pool.query('SELECT 1');
+    health.database = 'connected';
+  } catch {
+    health.database = 'disconnected';
+    health.status = 'degraded';
+  }
+
+  res.json(health);
 });
 
 // ─── Routes ─────────────────────────────────────────────────────────
@@ -69,15 +85,19 @@ app.use('/api/data', recordRoutes);
 
 // ─── Serve frontend in production ───────────────────────────────────
 
-const publicDir = path.resolve(__dirname, '../../frontend/dist');
-if (fs.existsSync(publicDir)) {
-  console.log(`[Static] Serving frontend from ${publicDir}`);
-  app.use(express.static(publicDir));
+// Resolve static directory: env var > Docker default > local dev path
+const staticDir = process.env.STATIC_DIR
+  || path.resolve('/app/public')  // Docker container
+  || path.resolve(__dirname, '../../frontend/dist'); // local dev
+
+if (fs.existsSync(staticDir)) {
+  console.log(`[Static] Serving frontend from ${staticDir}`);
+  app.use(express.static(staticDir));
   app.get('*', (_req, res) => {
-    res.sendFile(path.join(publicDir, 'index.html'));
+    res.sendFile(path.join(staticDir, 'index.html'));
   });
 } else {
-  // API-only mode: 404 for unknown routes
+  console.log(`[Static] No frontend found at ${staticDir}, running API-only mode`);
   app.use((_req, res) => {
     res.status(404).json({ error: 'Not found' });
   });
@@ -94,6 +114,44 @@ app.use((err: Error, _req: express.Request, res: express.Response, _next: expres
 
 // ─── Start Server ───────────────────────────────────────────────────
 
+// ─── Startup validation ────────────────────────────────────────────
+
+function validateConfig(): string[] {
+  const warnings: string[] = [];
+
+  if (config.nodeEnv === 'production') {
+    // Check JWT secret isn't the default
+    if (!config.jwt.secret || config.jwt.secret === 'dev-secret-change-me') {
+      warnings.push('JWT_SECRET is using the default value — generate a secure key!');
+    }
+
+    // Check encryption key
+    if (!config.encryption.key || config.encryption.key.length < 64) {
+      warnings.push('ENCRYPTION_KEY is missing or too short — must be 64 hex characters (32 bytes)');
+    }
+
+    // Check CORS origin is set
+    if (!config.corsOrigin || config.corsOrigin[0]?.includes('your-frontend')) {
+      warnings.push('CORS_ORIGIN is using a placeholder — set it to your actual frontend URL');
+    }
+
+    // Check S3 config if sync is enabled
+    if (config.sync.enabled) {
+      if (!config.storage.s3.accessKey || config.storage.s3.accessKey === 'your-access-key') {
+        warnings.push('SYNC_ENABLED=true but S3_ACCESS_KEY is not configured — cloud sync will fail');
+      }
+      if (!config.storage.s3.secretKey || config.storage.s3.secretKey === 'your-secret-key') {
+        warnings.push('SYNC_ENABLED=true but S3_SECRET_KEY is not configured — cloud sync will fail');
+      }
+      if (!config.storage.s3.bucket || config.storage.s3.bucket === 'orgvault-data') {
+        warnings.push('S3_BUCKET is using default value — set your bucket name');
+      }
+    }
+  }
+
+  return warnings;
+}
+
 // Ensure storage directory exists
 const storageDir = path.resolve(config.storage.localPath);
 if (!fs.existsSync(storageDir)) {
@@ -101,6 +159,8 @@ if (!fs.existsSync(storageDir)) {
 }
 
 app.listen(config.port, () => {
+  const warnings = validateConfig();
+
   console.log(`
 ╔══════════════════════════════════════════════════╗
 ║             🔐 OrgVault API Server               ║
@@ -112,6 +172,13 @@ app.listen(config.port, () => {
 ║  Storage:  ${config.storage.localPath.padEnd(37)}║
 ╚══════════════════════════════════════════════════╝
   `);
+
+  // Show config warnings
+  if (warnings.length > 0) {
+    console.log('⚠️  Configuration warnings:');
+    warnings.forEach((w) => console.log(`   - ${w}`));
+    console.log('');
+  }
 
   // Start sync service
   startSyncService();

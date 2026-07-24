@@ -37,7 +37,7 @@ router.post('/register', async (req: Request, res: Response) => {
       [orgName, orgName.toLowerCase().replace(/\s+/g, '-'), email, passwordHash, fullName]
     );
 
-    const user = result.rows[0];
+    const user = result.rows[0] as Record<string, string>;
 
     const tokenPayload = {
       userId: user.id,
@@ -93,7 +93,7 @@ router.post('/login', async (req: Request, res: Response) => {
       [email]
     );
 
-    const user = result.rows[0];
+    const user = result.rows[0] as Record<string, string>;
 
     if (!user) {
       // Constant-time-ish delay to prevent user enumeration
@@ -174,7 +174,7 @@ router.post('/refresh', async (req: Request, res: Response) => {
       [decoded.userId]
     );
 
-    const user = result.rows[0];
+    const user = result.rows[0] as Record<string, string> | undefined;
 
     if (!user || user.refresh_token !== refreshToken) {
       res.status(401).json({ error: 'Invalid refresh token' });
