@@ -2,8 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './hooks/useAuth';
+import { ToastProvider } from './components/Toast';
 import LoginPage from './pages/LoginPage';
 import DashboardLayout from './pages/DashboardLayout';
+import DashboardPage from './pages/DashboardPage';
+import FilesPage from './pages/FilesPage';
+import RecordsPage from './pages/RecordsPage';
+import CompaniesPage from './pages/CompaniesPage';
+import UsersPage from './pages/UsersPage';
+import SettingsPage from './pages/SettingsPage';
 import './index.css';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -12,7 +19,10 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="w-8 h-8 border-2 border-vault-600 border-t-transparent rounded-full animate-spin" />
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-2 border-vault-600 border-t-transparent rounded-full animate-spin" />
+          <p className="text-sm text-gray-400">Loading...</p>
+        </div>
       </div>
     );
   }
@@ -54,29 +64,20 @@ function AppRoutes() {
         }
       />
       <Route
-        path="/dashboard/*"
+        path="/dashboard"
         element={
           <ProtectedRoute>
             <DashboardLayout />
           </ProtectedRoute>
         }
-      />
-      <Route
-        path="/files"
-        element={
-          <ProtectedRoute>
-            <DashboardLayout />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/records"
-        element={
-          <ProtectedRoute>
-            <DashboardLayout />
-          </ProtectedRoute>
-        }
-      />
+      >
+        <Route index element={<DashboardPage />} />
+        <Route path="files" element={<FilesPage />} />
+        <Route path="records" element={<RecordsPage />} />
+        <Route path="companies" element={<CompaniesPage />} />
+        <Route path="users" element={<UsersPage />} />
+        <Route path="settings" element={<SettingsPage />} />
+      </Route>
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );
@@ -85,9 +86,11 @@ function AppRoutes() {
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <AppRoutes />
-      </AuthProvider>
+      <ToastProvider>
+        <AuthProvider>
+          <AppRoutes />
+        </AuthProvider>
+      </ToastProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

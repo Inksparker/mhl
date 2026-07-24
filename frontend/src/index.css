@@ -25,3 +25,18 @@ body {
 .drop-zone-active {
   @apply border-vault-500 bg-vault-50;
 }
+
+/* Toast animation */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-slide-up {
+  animation: slide-up 0.2s ease-out;
+}

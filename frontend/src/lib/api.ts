@@ -156,8 +156,10 @@ export const filesApi = {
     api.get(`/storage/${orgId}/files/${fileId}/info`),
   delete: (orgId: string, fileId: string) =>
     api.delete(`/storage/${orgId}/files/${fileId}`),
-  folders: (orgId: string) => api.get(`/storage/${orgId}/folders`),
-  tags: (orgId: string) => api.get(`/storage/${orgId}/tags`),
+  folders: (orgId: string) =>
+    api.get<{ folders: string[] }>(`/storage/${orgId}/folders`),
+  tags: (orgId: string) =>
+    api.get<{ tags: string[] }>(`/storage/${orgId}/tags`),
 };
 
 // ─── Records API ─────────────────────────────────────────────────────
@@ -199,12 +201,34 @@ export const recordsApi = {
 
 // ─── Orgs API ────────────────────────────────────────────────────────
 
+export interface OrgInfo {
+  id: string;
+  name: string;
+  created_at: string;
+}
+
+export interface Company {
+  id: string;
+  name: string;
+  created_at: string;
+}
+
+export interface OrgUser {
+  id: string;
+  email: string;
+  fullName: string;
+  role: string;
+  companyId?: string;
+  created_at: string;
+}
+
 export const orgsApi = {
-  getCurrent: () => api.get('/orgs/current'),
-  update: (payload: any) => api.put('/orgs/current', payload),
-  listCompanies: (orgId: string) => api.get(`/orgs/${orgId}/companies`),
+  getCurrent: () => api.get<{ organization: OrgInfo }>('/orgs/current'),
+  update: (payload: { name?: string }) => api.put('/orgs/current', payload),
+  listCompanies: (orgId: string) =>
+    api.get<{ companies: Company[] }>(`/orgs/${orgId}/companies`),
   createCompany: (orgId: string, payload: { name: string }) =>
     api.post(`/orgs/${orgId}/companies`, payload),
   listUsers: (orgId: string, params?: any) =>
-    api.get(`/orgs/${orgId}/users`, { params }),
+    api.get<{ users: OrgUser[] }>(`/orgs/${orgId}/users`, { params }),
 };
