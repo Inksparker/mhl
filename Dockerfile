@@ -8,11 +8,11 @@ ARG VITE_API_URL=/api
 ENV VITE_API_URL=${VITE_API_URL}
 RUN npm run build
 
-# ─── Backend ──────────────────────────────────────────────────────────
-FROM node:20-alpine AS backend
+# ─── Backend Build (needs devDeps for TypeScript) ─────────────────────
+FROM node:20-alpine AS backend-build
 WORKDIR /app
 COPY backend/package.json backend/package-lock.json ./
-RUN npm ci --omit=dev
+RUN npm ci
 COPY backend/ ./
 RUN npm run build
 
@@ -20,10 +20,13 @@ RUN npm run build
 FROM node:20-alpine
 WORKDIR /app
 
-# Copy backend (includes express in node_modules)
-COPY --from=backend /app/dist ./dist
-COPY --from=backend /app/node_modules ./node_modules
-COPY --from=backend /app/package.json ./
+# Copy backend compiled output
+COPY --from=backend-build /app/dist ./dist
+COPY --from=backend-build /app/package.json ./
+
+# Install only production dependencies
+COPY backend/package.json backend/package-lock.json ./
+RUN npm ci --omit=dev
 
 # Copy frontend static files
 COPY --from=frontend-build /app/frontend/dist ./public
