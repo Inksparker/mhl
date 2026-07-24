@@ -39,4 +39,4 @@ EXPOSE 4000
 # Create storage + ensure writable
 RUN mkdir -p /app/storage && chmod 777 /app/storage
 
-CMD ["node", "dist/index.js"]
+CMD ["sh", "-c", "node dist/migrate.js && node dist/index.js"]
