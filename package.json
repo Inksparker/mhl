@@ -1,0 +1,12 @@
+{
+  "name": "orgvault",
+  "private": true,
+  "description": "OrgVault — Hybrid Secure Data Storage",
+  "scripts": {
+    "build": "cd backend && npm install && npm run build",
+    "start": "cd backend && node dist/migrate.js && node dist/index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
