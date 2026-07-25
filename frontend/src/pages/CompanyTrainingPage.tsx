@@ -430,7 +430,23 @@ export default function CompanyTrainingPage() {
               {isExpanded && (
                 <div className="border-t border-gray-100 px-5 py-4 bg-gray-50/50">
                   {/* Video section */}
-                  {lesson.videoSlides ? (
+                  {lesson.videoUrl && lesson.videoUrl.endsWith('.mp4') ? (
+                    <div className="mb-4 rounded-xl overflow-hidden bg-black shadow-lg">
+                      <video
+                        src={lesson.videoUrl}
+                        controls
+                        autoPlay
+                        muted
+                        playsInline
+                        loop
+                        className="w-full"
+                        style={{ maxHeight: '400px', display: 'block' }}
+                        preload="auto"
+                      >
+                        Your browser does not support video playback.
+                      </video>
+                    </div>
+                  ) : lesson.videoSlides ? (
                     <div className="mb-4">
                       <TrainingVideoPlayer
                         title={lesson.title}
