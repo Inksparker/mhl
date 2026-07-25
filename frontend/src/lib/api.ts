@@ -230,5 +230,11 @@ export const orgsApi = {
   createCompany: (orgId: string, payload: { name: string }) =>
     api.post(`/orgs/${orgId}/companies`, payload),
   listUsers: (orgId: string, params?: any) =>
-    api.get<{ users: OrgUser[] }>(`/orgs/${orgId}/users`, { params }),
+    api.get<{ users: OrgUser[]; total: number }>(`/orgs/${orgId}/users`, { params }),
+  createUser: (orgId: string, payload: { email: string; password: string; fullName: string; role?: string; companyId?: string }) =>
+    api.post(`/orgs/${orgId}/users`, payload),
+  updateUser: (orgId: string, userId: string, payload: { role?: string; companyId?: string | null; isActive?: boolean }) =>
+    api.put(`/orgs/${orgId}/users/${userId}`, payload),
+  deactivateUser: (orgId: string, userId: string) =>
+    api.delete(`/orgs/${orgId}/users/${userId}`),
 };
