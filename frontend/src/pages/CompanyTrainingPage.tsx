@@ -364,13 +364,15 @@ export default function CompanyTrainingPage() {
 
       {/* Lessons */}
       <div className="space-y-3">
-        {COMPANY_LESSONS.map((lesson, i) => {
+        {COMPANY_LESSONS.map((lesson, lessonIndex) => {
           const isExpanded = expandedLessons.has(lesson.id);
           const isCompleted = completed.has(lesson.id);
+          const isLast = lessonIndex === COMPANY_LESSONS.length - 1;
 
           return (
             <div
               key={lesson.id}
+              id={`lesson-${lesson.id}`}
               className={`bg-white rounded-xl border overflow-hidden transition-all ${
                 isCompleted ? 'border-green-200' : 'border-gray-200'
               }`}
@@ -387,7 +389,7 @@ export default function CompanyTrainingPage() {
                       : 'bg-green-50 text-green-600'
                   }`}
                 >
-                  {isCompleted ? <CheckCircle2 className="w-5 h-5" /> : i + 1}
+                  {isCompleted ? <CheckCircle2 className="w-5 h-5" /> : lessonIndex + 1}
                 </div>
 
                 {/* Icon + Title */}
@@ -483,6 +485,37 @@ export default function CompanyTrainingPage() {
                       </div>
                     ))}
                   </div>
+
+                  {/* Progression: Next Lesson button */}
+                  {!isLast && (
+                    <div className="mt-4 pt-3 border-t border-gray-200 flex items-center justify-between">
+                      <button
+                        onClick={() => toggleComplete(lesson.id)}
+                        className={`text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${
+                          isCompleted
+                            ? 'bg-green-100 text-green-700'
+                            : 'bg-gray-100 text-gray-500 hover:bg-green-50 hover:text-green-600'
+                        }`}
+                      >
+                        {isCompleted ? '✓ Completed' : 'Mark complete'}
+                      </button>
+                      <button
+                        onClick={() => {
+                          if (!isCompleted) toggleComplete(lesson.id);
+                          const nextId = COMPANY_LESSONS[lessonIndex + 1]?.id;
+                          if (nextId) {
+                            setExpandedLessons(new Set([nextId]));
+                            setTimeout(() => {
+                              document.getElementById(`lesson-${nextId}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }, 100);
+                          }
+                        }}
+                        className="flex items-center gap-1.5 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm font-medium transition shadow-sm"
+                      >
+                        Next Lesson <ArrowRight className="w-4 h-4" />
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
