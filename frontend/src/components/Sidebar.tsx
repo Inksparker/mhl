@@ -77,7 +77,8 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             </Link>
           ))}
 
-          {/* Learning section divider */}
+          {/* Learning section divider — only for org admins and superadmins */}
+          {(user?.role === 'superadmin' || user?.role === 'org_admin') && (
           <div className="pt-4 mt-4 border-t border-gray-100">
             <p className="px-3 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
               Learning
@@ -98,6 +99,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               </Link>
             ))}
           </div>
+          )}
         </nav>
 
         {/* User section */}

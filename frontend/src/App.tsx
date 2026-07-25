@@ -55,6 +55,23 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+function AdminOnlyRoute({ children }: { children: React.ReactNode }) {
+  const { isAuthenticated, isLoading, user } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="w-8 h-8 border-2 border-vault-600 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (user?.role !== 'superadmin' && user?.role !== 'org_admin') return <Navigate to="/dashboard" replace />;
+
+  return <>{children}</>;
+}
+
 function AppRoutes() {
   return (
     <Routes>
@@ -83,7 +100,7 @@ function AppRoutes() {
         <Route path="company-training" element={<CompanyTrainingPage />} />
         <Route path="users" element={<UsersPage />} />
         <Route path="settings" element={<SettingsPage />} />
-        <Route path="training" element={<TrainingPage />} />
+        <Route path="training" element={<AdminOnlyRoute><TrainingPage /></AdminOnlyRoute>} />
       </Route>
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
