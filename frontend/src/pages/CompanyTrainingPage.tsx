@@ -430,9 +430,10 @@ export default function CompanyTrainingPage() {
               {isExpanded && (
                 <div className="border-t border-gray-100 px-5 py-4 bg-gray-50/50">
                   {/* Video section */}
-                  {lesson.videoUrl && lesson.videoUrl.endsWith('.mp4') ? (
+                  {lesson.videoUrl ? (
                     <div className="mb-4 rounded-xl overflow-hidden bg-black shadow-lg">
                       <video
+                        key={lesson.videoUrl}
                         src={lesson.videoUrl}
                         controls
                         autoPlay
@@ -443,7 +444,7 @@ export default function CompanyTrainingPage() {
                         style={{ maxHeight: '400px', display: 'block' }}
                         preload="auto"
                       >
-                        Your browser does not support video playback.
+                        <p>Your browser does not support video. <a href={lesson.videoUrl} target="_blank" rel="noreferrer">Download video</a></p>
                       </video>
                     </div>
                   ) : lesson.videoSlides ? (
@@ -454,21 +455,10 @@ export default function CompanyTrainingPage() {
                         autoPlay={false}
                       />
                     </div>
-                  ) : lesson.videoUrl ? (
-                    <div className="mb-4 aspect-video rounded-lg overflow-hidden bg-black">
-                      <iframe
-                        src={lesson.videoUrl}
-                        className="w-full h-full"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        title={lesson.title}
-                      />
-                    </div>
                   ) : (
                     <div className="mb-4 p-4 bg-white border border-dashed border-gray-300 rounded-lg text-center">
                       <Play className="w-8 h-8 text-gray-300 mx-auto mb-2" />
                       <p className="text-sm text-gray-400">Video tutorial coming soon</p>
-                      <p className="text-xs text-gray-300 mt-1">An admin can add a video URL to this lesson</p>
                     </div>
                   )}
                   <p className="text-sm text-green-700 font-medium mb-3">
