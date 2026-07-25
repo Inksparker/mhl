@@ -30,30 +30,7 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
-// Rate limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 1000,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: { error: 'Too many requests, please try again later' },
-});
-app.use(limiter);
-
-// Stricter rate limit for auth endpoints
-const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  validate: { trustProxy: false },
-  message: { error: 'Too many authentication attempts, please try again later' },
-});
-
-// ─── Body Parsing ───────────────────────────────────────────────────
-
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-
-// ─── Health Check ───────────────────────────────────────────────────
+// ─── Health Check (before rate limits to avoid validation errors) ──
 
 app.get('/health', async (_req, res) => {
   const health: Record<string, any> = {
@@ -79,6 +56,29 @@ app.get('/health', async (_req, res) => {
 
   res.json(health);
 });
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 1000,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests, please try again later' },
+});
+app.use(limiter);
+
+// Stricter rate limit for auth endpoints
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  validate: { trustProxy: false },
+  message: { error: 'Too many authentication attempts, please try again later' },
+});
+
+// ─── Body Parsing ───────────────────────────────────────────────────
+
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // ─── Routes ─────────────────────────────────────────────────────────
 
