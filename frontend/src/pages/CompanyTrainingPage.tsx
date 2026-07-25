@@ -45,6 +45,7 @@ const COMPANY_LESSONS: Lesson[] = [
       { icon: '👥', text: 'Only people in your company can see your files. Other companies in your org cannot access your data.', title: 'Team Access Only', color: 'text-yellow-400' },
       { icon: '✅', text: 'You\'re ready to get started! Follow the steps below to begin using OrgVault.', title: 'Ready to Go!', color: 'text-green-400' },
     ],
+    videoUrl: '/training-videos/01-welcome.mp4',
   },
   {
     id: 'co-navigate',
@@ -65,6 +66,7 @@ const COMPANY_LESSONS: Lesson[] = [
       { icon: '🗄️', text: 'Data Records lets you work with structured data in custom tables', title: 'Data Records', color: 'text-purple-400' },
       { icon: '🏢', text: 'Use the company dropdown in the header to switch between company views', title: 'Company Selector', color: 'text-blue-400' },
     ],
+    videoUrl: '/training-videos/02-navigate.mp4',
   },
   {
     id: 'co-upload',
@@ -86,6 +88,7 @@ const COMPANY_LESSONS: Lesson[] = [
       { icon: '🏷️', text: 'Add comma-separated tags like "important, draft, client-x" for quick filtering', title: 'Add Tags', color: 'text-purple-400' },
       { icon: '🔐', text: 'Your file is encrypted with AES-256 and stored securely', title: 'Encrypted!', color: 'text-green-400' },
     ],
+    videoUrl: '/training-videos/03-upload.mp4',
   },
   {
     id: 'co-organize',
@@ -105,6 +108,7 @@ const COMPANY_LESSONS: Lesson[] = [
       { icon: '🏷️', text: 'Tags are clickable — click a tag to see all files with that label', title: 'Tag Filtering', color: 'text-yellow-400' },
       { icon: '🔄', text: 'Use the breadcrumb trail to navigate back up through folders', title: 'Breadcrumb Trail', color: 'text-purple-400' },
     ],
+    videoUrl: '/training-videos/04-organize.mp4',
   },
   {
     id: 'co-find',
@@ -124,6 +128,7 @@ const COMPANY_LESSONS: Lesson[] = [
       { icon: '🏷️', text: 'Combine search with tag filters for laser-precise results', title: 'Combine Filters', color: 'text-yellow-400' },
       { icon: '🧹', text: 'Can\'t find something? Clear all filters and try different search terms', title: 'Pro Tip', color: 'text-purple-400' },
     ],
+    videoUrl: '/training-videos/05-search.mp4',
   },
   {
     id: 'co-download',
@@ -143,6 +148,7 @@ const COMPANY_LESSONS: Lesson[] = [
       { icon: '🗑️', text: 'Click Delete and confirm to remove files you no longer need', title: 'Delete Files', color: 'text-red-400' },
       { icon: '💾', text: 'Deleting files frees up storage — your company has a quota to manage', title: 'Frees Up Space', color: 'text-yellow-400' },
     ],
+    videoUrl: '/training-videos/06-download.mp4',
   },
   {
     id: 'co-records',
@@ -164,6 +170,7 @@ const COMPANY_LESSONS: Lesson[] = [
       { icon: '✏️', text: 'Hover over any record to edit or delete it. Changes save instantly.', title: 'Edit & Delete', color: 'text-yellow-400' },
       { icon: '📋', text: 'Use the Copy button to duplicate records as templates for new entries', title: 'Copy & Reuse', color: 'text-purple-400' },
     ],
+    videoUrl: '/training-videos/07-records.mp4',
   },
   {
     id: 'co-storage',
@@ -184,6 +191,7 @@ const COMPANY_LESSONS: Lesson[] = [
       { icon: '🟡', text: 'Amber = warning (70-90%). Time to clean up old files.', title: 'Getting Full', color: 'text-amber-400' },
       { icon: '🔴', text: 'Red = critical (over 90%). Uploads may be blocked soon!', title: 'Almost Full', color: 'text-red-400' },
     ],
+    videoUrl: '/training-videos/08-storage.mp4',
   },
   {
     id: 'co-security',
@@ -204,6 +212,7 @@ const COMPANY_LESSONS: Lesson[] = [
       { icon: '⏰', text: 'Sessions last 24 hours with automatic token rotation', title: 'Session Security', color: 'text-yellow-400' },
       { icon: '✅', text: 'You\'re all set! Your data is safe and secure in OrgVault.', title: 'You\'re Protected!', color: 'text-green-400' },
     ],
+    videoUrl: '/training-videos/09-security.mp4',
   },
 ];
 
