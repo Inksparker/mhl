@@ -93,29 +93,29 @@ export default function TrainingVideoPlayer({ title, slides, autoPlay = false }:
         }} />
 
         {/* Slide content */}
-        <div className="relative z-10 text-center max-w-lg animate-fadeIn">
+        <div key={currentSlide} className="relative z-10 text-center max-w-lg animate-video-fade-in">
           {/* Icon */}
           {slide.icon && (
-            <div className={`text-5xl mb-4 animate-bounceIn ${slide.color || 'text-blue-400'}`}>
+            <div className={`text-5xl mb-4 animate-video-bounce-in ${slide.color || 'text-blue-400'}`}>
               {slide.icon}
             </div>
           )}
 
           {/* Title */}
           {slide.title && (
-            <h3 className="text-xl font-bold text-white mb-3 animate-slideUp">
+            <h3 className="text-xl font-bold text-white mb-3 animate-video-slide-up">
               {slide.title}
             </h3>
           )}
 
           {/* Main text */}
-          <p className="text-lg text-gray-200 leading-relaxed animate-slideUp" style={{ animationDelay: '0.2s' }}>
+          <p className="text-lg text-gray-200 leading-relaxed animate-video-slide-up" style={{ animationDelay: '0.2s' }}>
             {slide.text}
           </p>
 
           {/* Highlight */}
           {slide.highlight && (
-            <div className="mt-4 inline-block px-4 py-2 bg-white/10 rounded-lg border border-white/20 animate-slideUp" style={{ animationDelay: '0.4s' }}>
+            <div className="mt-4 inline-block px-4 py-2 bg-white/10 rounded-lg border border-white/20 animate-video-slide-up" style={{ animationDelay: '0.4s' }}>
               <code className="text-sm text-green-300">{slide.highlight}</code>
             </div>
           )}
@@ -187,15 +187,6 @@ export default function TrainingVideoPlayer({ title, slides, autoPlay = false }:
         </div>
         <div className="w-16" /> {/* Spacer for symmetry */}
       </div>
-
-      <style>{`
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes bounceIn { 0% { opacity: 0; transform: scale(0.5); } 60% { transform: scale(1.1); } 100% { opacity: 1; transform: scale(1); } }
-        .animate-fadeIn { animation: fadeIn 0.6s ease-out; }
-        .animate-slideUp { animation: slideUp 0.6s ease-out both; }
-        .animate-bounceIn { animation: bounceIn 0.5s ease-out; }
-      `}</style>
     </div>
   );
 }
