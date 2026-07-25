@@ -1,6 +1,6 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 
-// In production, set VITE_API_URL to your backend URL (e.g., https://api.yourdomain.com)
+// In production, set VITE_API_URL to your backend URL + /api (e.g., https://api.yourdomain.com/api)
 // In development, the Vite proxy handles /api -> localhost:4000
 const API_BASE = import.meta.env.VITE_API_URL || '/api';
 
