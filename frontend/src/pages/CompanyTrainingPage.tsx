@@ -19,6 +19,7 @@ interface Lesson {
   duration: string;
   icon: React.ReactNode;
   goal: string;
+  videoUrl?: string;
   steps: Step[];
 }
 
@@ -358,6 +359,24 @@ export default function CompanyTrainingPage() {
               {/* Expanded steps */}
               {isExpanded && (
                 <div className="border-t border-gray-100 px-5 py-4 bg-gray-50/50">
+                  {/* Video embed */}
+                  {lesson.videoUrl ? (
+                    <div className="mb-4 aspect-video rounded-lg overflow-hidden bg-black">
+                      <iframe
+                        src={lesson.videoUrl}
+                        className="w-full h-full"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        title={lesson.title}
+                      />
+                    </div>
+                  ) : (
+                    <div className="mb-4 p-4 bg-white border border-dashed border-gray-300 rounded-lg text-center">
+                      <Play className="w-8 h-8 text-gray-300 mx-auto mb-2" />
+                      <p className="text-sm text-gray-400">Video tutorial coming soon</p>
+                      <p className="text-xs text-gray-300 mt-1">An admin can add a video URL to this lesson</p>
+                    </div>
+                  )}
                   <p className="text-sm text-green-700 font-medium mb-3">
                     🎯 Goal: {lesson.goal}
                   </p>
