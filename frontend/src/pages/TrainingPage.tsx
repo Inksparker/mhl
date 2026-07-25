@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { useCompany } from '../hooks/useCompany';
 import {
   GraduationCap, ChevronDown, ChevronRight, CheckCircle2, Circle,
   Building2, Users, Folder, Database, Settings, HardDrive, Shield,
@@ -158,7 +159,7 @@ const ALL_MODULES: Module[] = [
     id: 'admin-company',
     title: 'Managing Your Company',
     icon: <Building2 className="w-5 h-5" />,
-    description: 'Oversee files, records, and users within your company.',
+    description: 'Oversee files, records, and users within your assigned company.',
     roles: ['company_admin'],
     exercises: [
       {
@@ -341,7 +342,9 @@ const STORAGE_KEY = 'orgvault-training-progress';
 
 export default function TrainingPage() {
   const { user } = useAuth();
+  const { selectedCompany } = useCompany();
   const userRole = user?.role || 'viewer';
+  const companyName = selectedCompany?.name || null;
 
   // Filter modules by user role
   const modules = ALL_MODULES.filter((m) => m.roles.includes(userRole));
@@ -417,7 +420,11 @@ export default function TrainingPage() {
           </div>
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Training</h1>
-            <p className="text-sm text-gray-500">Role-based learning for {roleLabel[userRole] || userRole}</p>
+            <p className="text-sm text-gray-500">
+              {companyName
+                ? `${roleLabel[userRole]} · ${companyName}`
+                : `${roleLabel[userRole]} · All Companies`}
+            </p>
           </div>
         </div>
 
@@ -438,8 +445,15 @@ export default function TrainingPage() {
             <div className="flex-1">
               <h3 className="font-medium text-gray-900">
                 Training for: <span className="text-amber-700">{roleLabel[userRole]}</span>
+                {companyName && <span className="text-gray-400"> · {companyName}</span>}
               </h3>
               <p className="text-sm text-gray-500 mt-0.5">{roleDescription[userRole]}</p>
+              {companyName && (
+                <p className="text-xs text-amber-600 mt-1">💡 Tip: Use the company dropdown in the header to switch between company views. Your training is scoped to <strong>{companyName}</strong>.</p>
+              )}
+              {!companyName && userRole !== 'superadmin' && (
+                <p className="text-xs text-amber-600 mt-1">💡 Tip: Select a company from the dropdown above to see training specific to that company.</p>
+              )}
             </div>
             <div className="text-right flex-shrink-0">
               <span className="text-2xl font-bold text-gray-900">{progressPercent}%</span>
@@ -457,6 +471,14 @@ export default function TrainingPage() {
       </div>
 
       {/* Modules */}
+      {companyName && (
+        <div className="mb-4 p-4 bg-amber-50 border border-amber-200 rounded-xl">
+          <p className="text-sm text-amber-800">
+            🏢 You are viewing training for <strong>{companyName}</strong>. All exercises and linked pages are scoped to this company.
+            Switch companies using the dropdown in the header to see different company contexts.
+          </p>
+        </div>
+      )}
       {modules.length === 0 ? (
         <div className="bg-white rounded-xl border border-gray-200 px-6 py-16 text-center text-gray-400">
           <GraduationCap className="w-12 h-12 mx-auto mb-3 opacity-40" />
