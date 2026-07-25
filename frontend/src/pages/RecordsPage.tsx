@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { useAuth } from '../hooks/useAuth';
+import { useCompany } from '../hooks/useCompany';
 import { recordsApi, DataTable, DataRecord } from '../lib/api';
 import { useToast } from '../components/Toast';
 import {
@@ -9,6 +10,7 @@ import {
 
 export default function RecordsPage() {
   const { user } = useAuth();
+  const { selectedCompany } = useCompany();
   const { addToast } = useToast();
   const [tables, setTables] = useState<DataTable[]>([]);
   const [selectedTable, setSelectedTable] = useState<string | null>(null);
@@ -32,7 +34,7 @@ export default function RecordsPage() {
     if (!user) return;
     setIsLoading(true);
     recordsApi
-      .listTables(user.orgId)
+      .listTables(user.orgId, selectedCompany?.id)
       .then((res) => setTables(res.data.tables || []))
       .catch((err) => {
         addToast('error', 'Failed to load tables');
@@ -58,7 +60,7 @@ export default function RecordsPage() {
       setSelectedTable(slug);
       setIsRecordsLoading(true);
       recordsApi
-        .listRecords(user.orgId, slug, { decrypt: 'true', limit: '100' })
+        .listRecords(user.orgId, slug, { decrypt: 'true', limit: '100', ...(selectedCompany ? { companyId: selectedCompany.id } : {}) })
         .then((res) => {
           setRecords(res.data.records || []);
           setTotal(res.data.total || 0);
@@ -69,7 +71,7 @@ export default function RecordsPage() {
         })
         .finally(() => setIsRecordsLoading(false));
     },
-    [user, addToast]
+    [user, selectedCompany, addToast]
   );
 
   // Create table

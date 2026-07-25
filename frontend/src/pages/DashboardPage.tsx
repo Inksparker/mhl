@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { useCompany } from '../hooks/useCompany';
 import { filesApi, FileInfo } from '../lib/api';
 import { useToast } from '../components/Toast';
 import { File, Folder, Cloud, HardDrive, Upload, ArrowRight, TrendingUp } from 'lucide-react';
 
 export default function DashboardPage() {
   const { user } = useAuth();
+  const { selectedCompany } = useCompany();
   const { addToast } = useToast();
   const [stats, setStats] = useState({ files: 0, folders: 0, synced: 0, totalSize: 0 });
   const [recentFiles, setRecentFiles] = useState<FileInfo[]>([]);
@@ -16,10 +18,16 @@ export default function DashboardPage() {
     if (!user) return;
     setIsLoading(true);
 
+    const params: Record<string, string> = { limit: '5', sort: 'created_at', order: 'desc' };
+    if (selectedCompany) params.companyId = selectedCompany.id;
+
+    const countParams: Record<string, string> = { limit: '1' };
+    if (selectedCompany) countParams.companyId = selectedCompany.id;
+
     Promise.all([
-      filesApi.list(user.orgId, { limit: '5', sort: 'created_at', order: 'desc' }),
-      filesApi.folders(user.orgId),
-      filesApi.list(user.orgId, { limit: '1' }),
+      filesApi.list(user.orgId, params),
+      filesApi.folders(user.orgId, selectedCompany?.id),
+      filesApi.list(user.orgId, countParams),
     ])
       .then(([recentRes, foldersRes, totalRes]) => {
         setRecentFiles(recentRes.data.files);
@@ -42,7 +50,7 @@ export default function DashboardPage() {
         console.error(err);
       })
       .finally(() => setIsLoading(false));
-  }, [user, addToast]);
+  }, [user, selectedCompany, addToast]);
 
   const formatSize = (bytes: number) => {
     if (bytes === 0) return '0 B';

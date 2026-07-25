@@ -123,7 +123,7 @@ router.get('/:orgId/files/:fileId/info', requireOrgAccess, async (req: Request, 
 // ─── List Files ──────────────────────────────────────────────────────
 
 router.get('/:orgId/files', requireOrgAccess, async (req: Request, res: Response) => {
-  const { folder, tag, search, limit = '50', offset = '0', sort = 'created_at', order = 'desc' } = req.query;
+  const { folder, tag, search, companyId, limit = '50', offset = '0', sort = 'created_at', order = 'desc' } = req.query;
 
   let sql = `SELECT id, filename, mime_type, original_size, encrypted_size, synced, tags, folder, created_at
              FROM files WHERE organization_id = $1 AND is_deleted = false`;
@@ -133,6 +133,10 @@ router.get('/:orgId/files', requireOrgAccess, async (req: Request, res: Response
   if (req.user?.companyId) {
     sql += ` AND company_id = $${param++}`;
     params.push(req.user.companyId);
+  } else if (companyId) {
+    // Allow org_admins/superadmins to filter by company
+    sql += ` AND company_id = $${param++}`;
+    params.push(companyId);
   }
 
   if (folder) {
@@ -163,10 +167,14 @@ router.get('/:orgId/files', requireOrgAccess, async (req: Request, res: Response
   // Get total count
   let countSql = `SELECT COUNT(*) FROM files WHERE organization_id = $1 AND is_deleted = false`;
   const countParams: any[] = [req.params.orgId];
+  let countParam = 2;
 
   if (req.user?.companyId) {
-    countSql += ` AND company_id = $2`;
+    countSql += ` AND company_id = $${countParam++}`;
     countParams.push(req.user.companyId);
+  } else if (companyId) {
+    countSql += ` AND company_id = $${countParam++}`;
+    countParams.push(companyId);
   }
 
   const countResult = await query(countSql, countParams);
@@ -195,13 +203,25 @@ router.delete('/:orgId/files/:fileId', requireOrgAccess, async (req: Request, re
 // ─── List Folders ────────────────────────────────────────────────────
 
 router.get('/:orgId/folders', requireOrgAccess, async (req: Request, res: Response) => {
-  const result = await query(
-    `SELECT DISTINCT folder, COUNT(*) as file_count
+  const { companyId } = req.query;
+
+  let sql = `SELECT DISTINCT folder, COUNT(*) as file_count
      FROM files
-     WHERE organization_id = $1 AND is_deleted = false AND folder IS NOT NULL
-     GROUP BY folder ORDER BY folder`,
-    [req.params.orgId]
-  );
+     WHERE organization_id = $1 AND is_deleted = false AND folder IS NOT NULL`;
+  const params: any[] = [req.params.orgId];
+  let param = 2;
+
+  if (req.user?.companyId) {
+    sql += ` AND company_id = $${param++}`;
+    params.push(req.user.companyId);
+  } else if (companyId) {
+    sql += ` AND company_id = $${param++}`;
+    params.push(companyId);
+  }
+
+  sql += ` GROUP BY folder ORDER BY folder`;
+
+  const result = await query(sql, params);
 
   res.json({ folders: result.rows });
 });

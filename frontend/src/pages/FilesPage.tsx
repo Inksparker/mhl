@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect, useRef, DragEvent } from 'react';
 import { useAuth } from '../hooks/useAuth';
+import { useCompany } from '../hooks/useCompany';
 import { filesApi, FileInfo } from '../lib/api';
 import { useToast } from '../components/Toast';
 import {
@@ -9,9 +10,10 @@ import {
 
 export default function FilesPage() {
   const { user } = useAuth();
+  const { selectedCompany } = useCompany();
   const { addToast } = useToast();
   const [files, setFiles] = useState<FileInfo[]>([]);
-  const [folders, setFolders] = useState<string[]>([]);
+  const [folders, setFolders] = useState<Array<{ folder: string; file_count: number }>>([]);
   const [total, setTotal] = useState(0);
   const [search, setSearch] = useState('');
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
@@ -33,10 +35,11 @@ export default function FilesPage() {
     if (search) params.search = search;
     if (currentFolder) params.folder = currentFolder;
     if (selectedTag) params.tag = selectedTag;
+    if (selectedCompany) params.companyId = selectedCompany.id;
 
     Promise.all([
       filesApi.list(user.orgId, params),
-      filesApi.folders(user.orgId),
+      filesApi.folders(user.orgId, selectedCompany?.id),
     ])
       .then(([filesRes, foldersRes]) => {
         setFiles(filesRes.data.files);
@@ -48,7 +51,7 @@ export default function FilesPage() {
         console.error(err);
       })
       .finally(() => setIsLoading(false));
-  }, [user, search, currentFolder, selectedTag, addToast]);
+  }, [user, search, currentFolder, selectedTag, selectedCompany, addToast]);
 
   useEffect(() => {
     loadFiles();
@@ -222,14 +225,17 @@ export default function FilesPage() {
       {folders.length > 0 && !search && !currentFolder && (
         <div className="mb-4">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-            {folders.map((folder) => (
+            {folders.map(({ folder, file_count }) => (
               <button
                 key={folder}
                 onClick={() => navigateToFolder(folder)}
                 className="flex items-center gap-2 p-3 bg-white border border-gray-200 rounded-lg hover:border-vault-300 hover:bg-vault-50 transition-colors text-left"
               >
                 <Folder className="w-5 h-5 text-yellow-500 flex-shrink-0" />
-                <span className="text-sm font-medium text-gray-700 truncate">{folder}</span>
+                <div className="min-w-0">
+                  <span className="text-sm font-medium text-gray-700 truncate block">{folder}</span>
+                  <span className="text-xs text-gray-400">{file_count} file{file_count !== 1 ? 's' : ''}</span>
+                </div>
               </button>
             ))}
           </div>

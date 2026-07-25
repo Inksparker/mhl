@@ -156,10 +156,10 @@ export const filesApi = {
     api.get(`/storage/${orgId}/files/${fileId}/info`),
   delete: (orgId: string, fileId: string) =>
     api.delete(`/storage/${orgId}/files/${fileId}`),
-  folders: (orgId: string) =>
-    api.get<{ folders: string[] }>(`/storage/${orgId}/folders`),
+  folders: (orgId: string, companyId?: string) =>
+    api.get<{ folders: { folder: string; file_count: number }[] }>(`/storage/${orgId}/folders`, companyId ? { params: { companyId } } : undefined),
   tags: (orgId: string) =>
-    api.get<{ tags: string[] }>(`/storage/${orgId}/tags`),
+    api.get<{ tags: { tag: string; file_count: number }[] }>(`/storage/${orgId}/tags`),
 };
 
 // ─── Records API ─────────────────────────────────────────────────────
@@ -181,8 +181,8 @@ export interface DataRecord {
 }
 
 export const recordsApi = {
-  listTables: (orgId: string) =>
-    api.get<{ tables: DataTable[] }>(`/data/${orgId}/tables`),
+  listTables: (orgId: string, companyId?: string) =>
+    api.get<{ tables: DataTable[] }>(`/data/${orgId}/tables`, companyId ? { params: { companyId } } : undefined),
   createTable: (orgId: string, payload: { name: string; schema?: any }) =>
     api.post(`/data/${orgId}/tables`, payload),
   listRecords: (orgId: string, tableSlug: string, params?: any) =>

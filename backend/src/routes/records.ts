@@ -39,13 +39,19 @@ router.post('/:orgId/tables', requireOrgAccess, async (req: Request, res: Respon
 // ─── List Data Tables ────────────────────────────────────────────────
 
 router.get('/:orgId/tables', requireOrgAccess, async (req: Request, res: Response) => {
+  const { companyId } = req.query;
+
   let sql = `SELECT id, name, slug, schema, created_at, updated_at
              FROM data_tables WHERE organization_id = $1`;
   const params: any[] = [req.params.orgId];
+  let param = 2;
 
   if (req.user?.companyId) {
-    sql += ` AND company_id = $2`;
+    sql += ` AND (company_id = $${param++} OR company_id IS NULL)`;
     params.push(req.user.companyId);
+  } else if (companyId) {
+    sql += ` AND (company_id = $${param++} OR company_id IS NULL)`;
+    params.push(companyId);
   }
 
   sql += ` ORDER BY name`;
@@ -98,7 +104,7 @@ router.post('/:orgId/tables/:tableSlug/records', requireOrgAccess, async (req: R
 // ─── List Records ────────────────────────────────────────────────────
 
 router.get('/:orgId/tables/:tableSlug/records', requireOrgAccess, async (req: Request, res: Response) => {
-  const { limit = '50', offset = '0', decrypt: shouldDecrypt = 'false' } = req.query;
+  const { limit = '50', offset = '0', decrypt: shouldDecrypt = 'false', companyId } = req.query;
 
   const tableResult = await query(
     `SELECT id FROM data_tables WHERE organization_id = $1 AND slug = $2`,
@@ -113,12 +119,16 @@ router.get('/:orgId/tables/:tableSlug/records', requireOrgAccess, async (req: Re
   const tableId = tableResult.rows[0].id;
 
   const result = await query(
-    `SELECT id, data, encrypted_data, created_at, updated_at
-     FROM data_records
-     WHERE table_id = $1 AND is_deleted = false
-     ORDER BY created_at DESC
+    `SELECT dr.id, dr.data, dr.encrypted_data, dr.created_at, dr.updated_at
+     FROM data_records dr
+     ${companyId ? 'JOIN data_tables dt ON dr.table_id = dt.id' : ''}
+     WHERE dr.table_id = $1 AND dr.is_deleted = false
+     ${companyId ? 'AND dt.company_id = $' + (companyId ? 4 : 3) : ''}
+     ORDER BY dr.created_at DESC
      LIMIT $2 OFFSET $3`,
-    [tableId, parseInt(limit as string, 10), parseInt(offset as string, 10)]
+    companyId
+      ? [tableId, parseInt(limit as string, 10), parseInt(offset as string, 10), companyId]
+      : [tableId, parseInt(limit as string, 10), parseInt(offset as string, 10)]
   );
 
   const countResult = await query(
