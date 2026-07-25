@@ -25,6 +25,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     { to: '/dashboard/files', icon: Folder, label: 'Files' },
     { to: '/dashboard/records', icon: Database, label: 'Data Records' },
     { to: '/dashboard/companies', icon: Building2, label: 'Companies' },
+    { to: '/dashboard/company-training', icon: GraduationCap, label: 'Company Training' },
     { to: '/dashboard/users', icon: Users, label: 'Users' },
     { to: '/dashboard/settings', icon: Settings, label: 'Settings' },
   ];

@@ -13,6 +13,7 @@ import CompaniesPage from './pages/CompaniesPage';
 import UsersPage from './pages/UsersPage';
 import SettingsPage from './pages/SettingsPage';
 import TrainingPage from './pages/TrainingPage';
+import CompanyTrainingPage from './pages/CompanyTrainingPage';
 import './index.css';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -79,6 +80,7 @@ function AppRoutes() {
         <Route path="files" element={<FilesPage />} />
         <Route path="records" element={<RecordsPage />} />
         <Route path="companies" element={<CompaniesPage />} />
+        <Route path="company-training" element={<CompanyTrainingPage />} />
         <Route path="users" element={<UsersPage />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="training" element={<TrainingPage />} />
