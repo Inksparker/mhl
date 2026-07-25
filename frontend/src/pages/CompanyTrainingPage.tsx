@@ -486,19 +486,40 @@ export default function CompanyTrainingPage() {
                     ))}
                   </div>
 
-                  {/* Progression: Next Lesson button */}
-                  {!isLast && (
-                    <div className="mt-4 pt-3 border-t border-gray-200 flex items-center justify-between">
+                  {/* Progression buttons */}
+                  <div className="mt-4 pt-3 border-t border-gray-200 flex items-center justify-between">
+                    {/* Previous */}
+                    {lessonIndex > 0 ? (
                       <button
-                        onClick={() => toggleComplete(lesson.id)}
-                        className={`text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${
-                          isCompleted
-                            ? 'bg-green-100 text-green-700'
-                            : 'bg-gray-100 text-gray-500 hover:bg-green-50 hover:text-green-600'
-                        }`}
+                        onClick={() => {
+                          const prevId = COMPANY_LESSONS[lessonIndex - 1]?.id;
+                          if (prevId) {
+                            setExpandedLessons(new Set([prevId]));
+                            setTimeout(() => {
+                              document.getElementById(`lesson-${prevId}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }, 100);
+                          }
+                        }}
+                        className="flex items-center gap-1.5 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 text-sm font-medium transition"
                       >
-                        {isCompleted ? '✓ Completed' : 'Mark complete'}
+                        <ArrowRight className="w-4 h-4 rotate-180" /> Previous Lesson
                       </button>
+                    ) : <div />}
+
+                    {/* Mark complete */}
+                    <button
+                      onClick={() => toggleComplete(lesson.id)}
+                      className={`text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${
+                        isCompleted
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-gray-100 text-gray-500 hover:bg-green-50 hover:text-green-600'
+                      }`}
+                    >
+                      {isCompleted ? '✓ Completed' : 'Mark complete'}
+                    </button>
+
+                    {/* Next */}
+                    {!isLast ? (
                       <button
                         onClick={() => {
                           if (!isCompleted) toggleComplete(lesson.id);
@@ -514,8 +535,8 @@ export default function CompanyTrainingPage() {
                       >
                         Next Lesson <ArrowRight className="w-4 h-4" />
                       </button>
-                    </div>
-                  )}
+                    ) : <div />}
+                  </div>
                 </div>
               )}
             </div>
