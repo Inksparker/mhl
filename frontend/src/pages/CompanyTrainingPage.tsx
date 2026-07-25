@@ -429,26 +429,17 @@ export default function CompanyTrainingPage() {
               {/* Expanded steps */}
               {isExpanded && (
                 <div className="border-t border-gray-100 px-5 py-4 bg-gray-50/50">
-                  {/* Direct video link for testing */}
+                  {/* Video section */}
                   {lesson.videoUrl && (
                     <div className="mb-3">
-                      <a
-                        href={lesson.videoUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm font-medium transition"
-                      >
-                        <Play className="w-4 h-4" /> Open Video in New Tab
-                      </a>
                       <video
                         key={lesson.videoUrl}
                         src={lesson.videoUrl}
                         controls
                         playsInline
-                        loop
-                        className="w-full mt-3 rounded-xl"
+                        className="w-full rounded-xl"
                         style={{ maxHeight: '360px', display: 'block', background: '#000' }}
-                        preload="auto"
+                        preload="metadata"
                       >
                         <p>Your browser cannot play this video.</p>
                       </video>
