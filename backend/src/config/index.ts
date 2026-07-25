@@ -42,6 +42,10 @@ export const config = {
   audit: {
     enabled: process.env.AUDIT_LOG_ENABLED !== 'false',
   },
+
+  quota: {
+    defaultOrgQuotaBytes: 10 * 1024 * 1024 * 1024, // 10 GB default
+  },
 } as const;
 
 export type Config = typeof config;

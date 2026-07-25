@@ -13,7 +13,7 @@ router.use(authenticate);
 
 router.get('/current', async (req: Request, res: Response) => {
   const result = await query(
-    `SELECT id, name, slug, settings, created_at, updated_at
+    `SELECT id, name, slug, settings, storage_quota_bytes, storage_used_bytes, created_at, updated_at
      FROM organizations WHERE id = $1`,
     [req.user!.orgId]
   );
@@ -23,7 +23,19 @@ router.get('/current', async (req: Request, res: Response) => {
     return;
   }
 
-  res.json(result.rows[0]);
+  const row = result.rows[0] as Record<string, any>;
+  res.json({
+    organization: {
+      id: row.id,
+      name: row.name,
+      slug: row.slug,
+      settings: row.settings,
+      storageQuotaBytes: Number(row.storage_quota_bytes),
+      storageUsedBytes: Number(row.storage_used_bytes),
+      created_at: row.created_at,
+      updated_at: row.updated_at,
+    },
+  });
 });
 
 // ─── Update Organization ─────────────────────────────────────────────
@@ -310,6 +322,44 @@ router.delete('/:orgId/users/:userId', requireRole('org_admin'), requireOrgAcces
     console.error('Deactivate user error:', err);
     res.status(500).json({ error: 'Failed to deactivate user' });
   }
+});
+
+// ─── Get Storage Quota ──────────────────────────────────────────────
+
+router.get('/:orgId/quota', requireOrgAccess, async (req: Request, res: Response) => {
+  const { getQuota } = require('../services/quota');
+  const quota = await getQuota(req.params.orgId, req.query.companyId as string);
+  res.json(quota);
+});
+
+// ─── Set Organization Quota ─────────────────────────────────────────
+
+router.put('/:orgId/quota', requireRole('org_admin'), requireOrgAccess, async (req: Request, res: Response) => {
+  const { quotaBytes } = req.body;
+
+  if (!quotaBytes || quotaBytes < 0) {
+    res.status(400).json({ error: 'quotaBytes must be a positive number (in bytes)' });
+    return;
+  }
+
+  const { setOrgQuota } = require('../services/quota');
+  await setOrgQuota(req.params.orgId, quotaBytes);
+  res.json({ message: 'Quota updated', quotaBytes });
+});
+
+// ─── Set Company Quota ──────────────────────────────────────────────
+
+router.put('/:orgId/companies/:companyId/quota', requireRole('org_admin'), requireOrgAccess, async (req: Request, res: Response) => {
+  const { quotaBytes } = req.body;
+
+  if (quotaBytes === undefined || quotaBytes < 0) {
+    res.status(400).json({ error: 'quotaBytes must be a positive number (in bytes) or 0 for unlimited' });
+    return;
+  }
+
+  const { setCompanyQuota } = require('../services/quota');
+  await setCompanyQuota(req.params.orgId, req.params.companyId, quotaBytes);
+  res.json({ message: 'Company quota updated', quotaBytes });
 });
 
 export default router;

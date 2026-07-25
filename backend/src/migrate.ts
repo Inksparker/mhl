@@ -131,6 +131,12 @@ CREATE INDEX IF NOT EXISTS idx_audit_logs_user ON audit_logs(user_id, created_at
 CREATE INDEX IF NOT EXISTS idx_users_org ON users(organization_id);
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 CREATE INDEX IF NOT EXISTS idx_data_records_data ON data_records USING GIN(data);
+
+-- ─── Storage Quotas ────────────────────────────────────────────────
+ALTER TABLE organizations ADD COLUMN IF NOT EXISTS storage_quota_bytes BIGINT DEFAULT 10737418240;
+ALTER TABLE organizations ADD COLUMN IF NOT EXISTS storage_used_bytes BIGINT DEFAULT 0;
+ALTER TABLE companies ADD COLUMN IF NOT EXISTS storage_quota_bytes BIGINT;
+ALTER TABLE companies ADD COLUMN IF NOT EXISTS storage_used_bytes BIGINT DEFAULT 0;
 `;
 
 async function migrate(): Promise<void> {

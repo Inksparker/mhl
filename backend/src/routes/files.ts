@@ -5,6 +5,7 @@ import { authenticate } from '../middleware/auth';
 import { requireOrgAccess } from '../middleware/rbac';
 import { storeHybrid, retrieveHybrid, deleteHybrid, listLocalFiles } from '../services/storage';
 import { queueUpload } from '../services/sync';
+import { checkQuota, trackUsage, trackFree } from '../services/quota';
 
 const router = Router();
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 500 * 1024 * 1024 } }); // 500MB max
@@ -26,6 +27,17 @@ router.post(
 
       const { tags, folder } = req.body;
       const tagArray = tags ? tags.split(',').map((t: string) => t.trim()) : [];
+
+      // Check storage quota
+      const quotaCheck = await checkQuota(
+        req.params.orgId,
+        req.file.size,
+        req.user?.companyId || undefined
+      );
+      if (!quotaCheck.allowed) {
+        res.status(413).json({ error: quotaCheck.reason || 'Storage quota exceeded' });
+        return;
+      }
 
       // Store file (local + cloud)
       const fileId = require('uuid').v4();
@@ -65,6 +77,9 @@ router.post(
       if (!storageResult.synced && storageResult.cloudKey === undefined) {
         queueUpload(req.params.orgId, fileId);
       }
+
+      // Track storage usage
+      await trackUsage(req.params.orgId, storageResult.originalSize, req.user?.companyId || undefined);
 
       res.status(201).json(dbResult.rows[0]);
     } catch (err) {
@@ -188,6 +203,20 @@ router.get('/:orgId/files', requireOrgAccess, async (req: Request, res: Response
 // ─── Delete File (soft delete) ───────────────────────────────────────
 
 router.delete('/:orgId/files/:fileId', requireOrgAccess, async (req: Request, res: Response) => {
+  // Get file info first for quota tracking
+  const fileResult = await query(
+    `SELECT original_size, company_id FROM files WHERE id = $1 AND organization_id = $2 AND is_deleted = false`,
+    [req.params.fileId, req.params.orgId]
+  );
+
+  if (fileResult.rows.length === 0) {
+    res.status(404).json({ error: 'File not found' });
+    return;
+  }
+
+  const fileSize = Number(fileResult.rows[0].original_size);
+  const fileCompanyId = (fileResult.rows[0] as any).company_id as string | null;
+
   // Soft delete in DB
   await query(
     `UPDATE files SET is_deleted = true, updated_at = NOW() WHERE id = $1 AND organization_id = $2`,
@@ -196,6 +225,9 @@ router.delete('/:orgId/files/:fileId', requireOrgAccess, async (req: Request, re
 
   // Delete actual files
   await deleteHybrid(req.params.orgId, req.params.fileId);
+
+  // Track freed storage
+  await trackFree(req.params.orgId, fileSize, fileCompanyId || undefined);
 
   res.json({ message: 'File deleted' });
 });

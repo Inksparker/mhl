@@ -237,4 +237,10 @@ export const orgsApi = {
     api.put(`/orgs/${orgId}/users/${userId}`, payload),
   deactivateUser: (orgId: string, userId: string) =>
     api.delete(`/orgs/${orgId}/users/${userId}`),
+  getQuota: (orgId: string, companyId?: string) =>
+    api.get(`/orgs/${orgId}/quota`, companyId ? { params: { companyId } } : undefined),
+  setOrgQuota: (orgId: string, quotaBytes: number) =>
+    api.put(`/orgs/${orgId}/quota`, { quotaBytes }),
+  setCompanyQuota: (orgId: string, companyId: string, quotaBytes: number) =>
+    api.put(`/orgs/${orgId}/companies/${companyId}/quota`, { quotaBytes }),
 };
