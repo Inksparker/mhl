@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OrgVault — User Manual</title>
+<style>
+  @page { margin: 25mm 20mm; size: A4; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: #1a1a2e; line-height: 1.7; max-width: 800px; margin: 0 auto; padding: 20px; }
+  h1 { color: #364fc7; border-bottom: 3px solid #364fc7; padding-bottom: 10px; font-size: 28px; }
+  h2 { color: #3b5bdb; border-bottom: 1px solid #dbe4ff; padding-bottom: 6px; margin-top: 32px; font-size: 22px; }
+  h3 { color: #4c6ef5; margin-top: 24px; font-size: 17px; }
+  .cover { text-align: center; padding: 60px 0 40px; }
+  .cover h1 { font-size: 36px; border: none; }
+  .cover .subtitle { color: #748ffc; font-size: 18px; margin-top: 8px; }
+  .cover .version { color: #adb5bd; font-size: 13px; margin-top: 30px; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th { background: #f0f4ff; text-align: left; padding: 10px 12px; font-weight: 600; color: #364fc7; }
+  td { padding: 8px 12px; border-bottom: 1px solid #e9ecef; }
+  tr:hover td { background: #f8f9ff; }
+  .tip { background: #f0f4ff; border-left: 4px solid #4c6ef5; padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; font-size: 14px; }
+  .tip strong { color: #364fc7; }
+  .warning { background: #fff9db; border-left: 4px solid #f08c00; padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; font-size: 14px; }
+  .step { background: #f8f9fa; padding: 8px 14px; margin: 6px 0; border-radius: 6px; font-size: 14px; }
+  .step .num { display: inline-block; width: 24px; height: 24px; background: #4c6ef5; color: #fff; text-align: center; border-radius: 50%; font-size: 13px; line-height: 24px; margin-right: 8px; font-weight: 700; }
+  code { background: #f1f3f5; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+  .toc { background: #f8f9fa; padding: 20px 24px; border-radius: 8px; margin: 20px 0; }
+  .toc a { color: #4c6ef5; text-decoration: none; }
+  .toc ol { margin: 8px 0; padding-left: 22px; }
+  .toc li { margin: 4px 0; }
+  .footer { text-align: center; color: #adb5bd; font-size: 11px; margin-top: 40px; border-top: 1px solid #e9ecef; padding-top: 16px; }
+  .role-badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+  .superadmin { background: #ffe3e3; color: #c92a2a; }
+  .org_admin { background: #e5dbff; color: #6741d9; }
+  .member { background: #d3f9d8; color: #2b8a3e; }
+  .viewer { background: #e9ecef; color: #495057; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>🔐 OrgVault</h1>
+  <div class="subtitle">Hybrid Secure Data Storage — User Manual</div>
+  <div class="version">Version 1.0 · July 2026</div>
+</div>
+
+<div class="toc">
+  <strong>Contents</strong>
+  <ol>
+    <li><a href="#getting-started">Getting Started</a></li>
+    <li><a href="#dashboard">Dashboard</a></li>
+    <li><a href="#files">File Management</a></li>
+    <li><a href="#records">Data Records</a></li>
+    <li><a href="#companies">Companies</a></li>
+    <li><a href="#users">User Management</a></li>
+    <li><a href="#settings">Organization Settings</a></li>
+    <li><a href="#security">Security</a></li>
+    <li><a href="#roles">Roles & Permissions</a></li>
+  </ol>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2 id="getting-started">1. Getting Started</h2>
+
+<h3>Accessing OrgVault</h3>
+<p>Open your browser and go to your OrgVault URL. You'll see the login page with the OrgVault shield logo on the left and the sign-in form on the right.</p>
+
+<h3>Creating an Account</h3>
+<div class="step"><span class="num">1</span> On the login page, click <strong>"Don't have an account? Create one"</strong></div>
+<div class="step"><span class="num">2</span> Fill in your <strong>Full Name</strong>, <strong>Organization Name</strong>, <strong>Email</strong>, and <strong>Password</strong> (minimum 12 characters)</div>
+<div class="step"><span class="num">3</span> Click <strong>"Create Account"</strong></div>
+<div class="step"><span class="num">4</span> You'll be automatically logged in and taken to the Dashboard</div>
+
+<div class="tip"><strong>Tip:</strong> The first person to register becomes the <strong>Organization Admin</strong>. A superadmin can promote you to additional roles later.</div>
+
+<h3>Logging In</h3>
+<div class="step"><span class="num">1</span> Enter your <strong>Email</strong> and <strong>Password</strong></div>
+<div class="step"><span class="num">2</span> Click <strong>"Sign In"</strong></div>
+<p>You'll be taken directly to your Dashboard. Your session lasts 24 hours before you need to log in again.</p>
+
+<h3>Logging Out</h3>
+<p>Click <strong>"Sign Out"</strong> at the bottom of the left sidebar.</p>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2 id="dashboard">2. Dashboard</h2>
+
+<p>The Dashboard is your home screen. It shows:</p>
+
+<h3>Stats Cards</h3>
+<table>
+  <tr><th>Card</th><th>What it shows</th></tr>
+  <tr><td>Total Files</td><td>Number of files stored in your organization</td></tr>
+  <tr><td>Folders</td><td>Number of folders used to organize files</td></tr>
+  <tr><td>Storage Used</td><td>Total storage space consumed (auto-formatted)</td></tr>
+  <tr><td>Synced to Cloud</td><td>Number of files backed up to cloud storage</td></tr>
+</table>
+
+<h3>Recent Files</h3>
+<p>Shows your 5 most recently uploaded files with name, size, date, sync status, and tags. Click <strong>"View all →"</strong> to go to the Files page.</p>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2 id="files">3. File Management</h2>
+
+<p>The <strong>Files</strong> page is where you upload, organize, and manage all your documents and files. Access it by clicking <strong>Files</strong> in the left sidebar.</p>
+
+<h3>Uploading Files</h3>
+<p>There are two ways to upload:</p>
+<div class="step"><span class="num">1</span> <strong>Drag & Drop:</strong> Drag files from your computer onto the dashed upload zone</div>
+<div class="step"><span class="num">2</span> <strong>Browse:</strong> Click the <strong>"Upload"</strong> button or click anywhere in the upload zone to open a file picker</div>
+
+<div class="tip"><strong>Tip:</strong> You can upload multiple files at once. Maximum file size is <strong>500 MB</strong> per file. Files are encrypted with AES-256-GCM before storage.</div>
+
+<h3>Organizing with Folders</h3>
+<p>When uploading, you can assign files to a folder. Use folder names like <code>invoices/2024</code> for nested organization. Click a folder in the folder grid to filter files within it. Use the breadcrumb trail at the top to navigate back.</p>
+
+<h3>Tagging Files</h3>
+<p>Add tags when uploading to categorize files (e.g., <code>invoice</code>, <code>confidential</code>, <code>draft</code>). Click any tag on a file to filter the file list by that tag. Remove the tag filter by clicking the <strong>✕</strong> on the active tag pill.</p>
+
+<h3>Searching Files</h3>
+<p>Use the search bar to find files by name. Search works across your current folder and updates results as you type.</p>
+
+<h3>Downloading & Deleting</h3>
+<p>Hover over a file row to reveal action buttons:</p>
+<table>
+  <tr><th>Action</th><th>Button</th><th>What it does</th></tr>
+  <tr><td>Download</td><td>⬇</td><td>Downloads the decrypted file to your computer</td></tr>
+  <tr><td>Delete</td><td>🗑</td><td>Soft-deletes the file (recoverable by admin)</td></tr>
+</table>
+
+<div class="warning"><strong>Important:</strong> Deleted files are soft-deleted (hidden but retained). Contact your admin for permanent deletion.</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2 id="records">4. Data Records</h2>
+
+<p>The <strong>Data Records</strong> page lets you store structured data in custom tables — perfect for contacts, invoices, inventory, or any tabular data. Access it via <strong>Data Records</strong> in the sidebar.</p>
+
+<h3>Creating a Table</h3>
+<div class="step"><span class="num">1</span> Click <strong>"New Table"</strong> at the top right</div>
+<div class="step"><span class="num">2</span> Enter a name (e.g., <code>Contacts</code>, <code>Invoices</code>)</div>
+<div class="step"><span class="num">3</span> Press <strong>Enter</strong> or click <strong>"Create"</strong></div>
+<p>Your table appears in the left panel. Click it to view records.</p>
+
+<h3>Adding Records</h3>
+<div class="step"><span class="num">1</span> Select a table from the left panel</div>
+<div class="step"><span class="num">2</span> Click <strong>"Add Record"</strong></div>
+<div class="step"><span class="num">3</span> Enter JSON data in the editor:</div>
+<pre><code>{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "phone": "+234 800 000 0000"
+}</code></pre>
+<div class="step"><span class="num">4</span> Click <strong>"Create"</strong></div>
+
+<div class="tip"><strong>Tip:</strong> Records are stored as flexible JSON — each record can have different fields. Use the <strong>Copy</strong> button to duplicate JSON structure.</div>
+
+<h3>Editing Records</h3>
+<p>Hover over a record and click the <strong>✏️ Edit</strong> button. Modify the JSON in the editor and click <strong>"Update"</strong>.</p>
+
+<h3>Deleting Records & Tables</h3>
+<p>Hover over a record and click 🗑 <strong>Delete</strong>. To delete an entire table, hover over it in the left panel and click the trash icon. <strong>This removes all records in that table.</strong></p>
+
+<h3>Searching Records</h3>
+<p>Use the search bar above the record list to filter records by their JSON content.</p>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2 id="companies">5. Companies</h2>
+
+<p>Organizations can have multiple <strong>companies</strong> (sub-tenants) to isolate data between departments or subsidiaries. Access via <strong>Companies</strong> in the sidebar.</p>
+
+<h3>Adding a Company</h3>
+<div class="step"><span class="num">1</span> Click <strong>"Add Company"</strong></div>
+<div class="step"><span class="num">2</span> Enter the company name</div>
+<div class="step"><span class="num">3</span> Press <strong>Enter</strong> or click <strong>"Create"</strong></div>
+
+<p>The company appears in the table. Users can be assigned to companies for data isolation.</p>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2 id="users">6. User Management</h2>
+
+<p>The <strong>Users</strong> page lists everyone in your organization with their roles. Access via <strong>Users</strong> in the sidebar.</p>
+
+<h3>Viewing Users</h3>
+<p>Each user row shows:</p>
+<table>
+  <tr><th>Column</th><th>Description</th></tr>
+  <tr><td>Avatar + Name</td><td>User's initial and full name</td></tr>
+  <tr><td>Email</td><td>User's email address</td></tr>
+  <tr><td>Role</td><td>Colored badge showing permission level</td></tr>
+  <tr><td>Joined</td><td>Date the user joined the organization</td></tr>
+</table>
+
+<h3>Adding Users</h3>
+<p>New users register themselves from the login page using the <strong>same organization name</strong>. They automatically join your organization with the <strong>member</strong> role.</p>
+
+<div class="tip"><strong>Tip:</strong> Share your organization name with team members so they can join during registration. A superadmin can promote them afterward.</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2 id="settings">7. Organization Settings</h2>
+
+<p>Access settings via <strong>Settings</strong> in the sidebar.</p>
+
+<h3>General</h3>
+<table>
+  <tr><th>Setting</th><th>Description</th></tr>
+  <tr><td>Organization Name</td><td>Change your organization's display name</td></tr>
+  <tr><td>Organization ID</td><td>Read-only unique identifier (used internally)</td></tr>
+</table>
+<p>Click <strong>"Save Changes"</strong> after editing.</p>
+
+<h3>Security Status</h3>
+<p>The Security section displays your current protection status:</p>
+<table>
+  <tr><th>Feature</th><th>Status</th></tr>
+  <tr><td>Encryption at Rest</td><td>AES-256-GCM — Active</td></tr>
+  <tr><td>JWT Authentication</td><td>24h tokens with refresh rotation — Active</td></tr>
+</table>
+
+<div class="warning"><strong>Danger Zone:</strong> The Delete Organization option permanently removes all data — this function is restricted to prevent accidents.</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2 id="security">8. Security</h2>
+
+<h3>Encryption</h3>
+<p>Every file uploaded to OrgVault is encrypted with <strong>AES-256-GCM</strong> before being written to disk. A unique encryption key is derived for each file using PBKDF2 from a master key, ensuring no two files share the same encryption key.</p>
+
+<h3>Authentication</h3>
+<ul>
+  <li><strong>Passwords</strong> are hashed with Argon2id — the industry standard</li>
+  <li><strong>Access tokens</strong> expire after 24 hours</li>
+  <li><strong>Refresh tokens</strong> rotate on each use and expire after 7 days</li>
+  <li><strong>Rate limiting</strong> protects login endpoints from brute-force attacks</li>
+</ul>
+
+<h3>Audit Logging</h3>
+<p>All mutating operations (uploads, deletes, record changes) are logged with timestamps, user IDs, and IP addresses. Audit logs are immutable and available to admins.</p>
+
+<h3>Data Isolation</h3>
+<p>All database queries are automatically scoped to your organization. Companies provide an additional layer of isolation within your org.</p>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2 id="roles">9. Roles & Permissions</h2>
+
+<table>
+  <tr><th>Role</th><th>Badge</th><th>Permissions</th></tr>
+  <tr>
+    <td><strong>Superadmin</strong></td>
+    <td><span class="role-badge superadmin">superadmin</span></td>
+    <td>Full access across all organizations. Can promote/demote users, delete organizations, access all data.</td>
+  </tr>
+  <tr>
+    <td><strong>Org Admin</strong></td>
+    <td><span class="role-badge org_admin">org_admin</span></td>
+    <td>Manage their organization: add companies, view all files/records, manage users within their org.</td>
+  </tr>
+  <tr>
+    <td><strong>Company Admin</strong></td>
+    <td><span class="role-badge" style="background:#d0ebff;color:#1864ab;">company_admin</span></td>
+    <td>Manage a specific company: files, records, and users scoped to that company.</td>
+  </tr>
+  <tr>
+    <td><strong>Member</strong></td>
+    <td><span class="role-badge member">member</span></td>
+    <td>Upload files, create records, edit own data. Cannot manage users or org settings.</td>
+  </tr>
+  <tr>
+    <td><strong>Viewer</strong></td>
+    <td><span class="role-badge viewer">viewer</span></td>
+    <td>Read-only access: view files and records but cannot upload, edit, or delete.</td>
+  </tr>
+</table>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<div class="footer">
+  <p>OrgVault · Hybrid Secure Data Storage · Version 1.0</p>
+  <p>Built with AES-256-GCM encryption · Argon2 authentication · Role-based access control</p>
+</div>
+
+</body>
+</html>
