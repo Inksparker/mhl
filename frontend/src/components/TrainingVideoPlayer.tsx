@@ -83,40 +83,30 @@ export default function TrainingVideoPlayer({ title, slides, autoPlay = false }:
   const slide = slides[currentSlide];
 
   return (
-    <div className="bg-gray-900 rounded-xl overflow-hidden shadow-2xl">
+    <div className="rounded-xl overflow-hidden shadow-lg" style={{ backgroundColor: '#111827' }}>
       {/* Video area */}
-      <div className="aspect-video relative flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900 p-8">
+      <div className="relative flex items-center justify-center" style={{ minHeight: '280px', padding: '32px', background: 'linear-gradient(135deg, #1f2937, #111827)' }}>
         {/* Background grid */}
-        <div className="absolute inset-0 opacity-5" style={{
-          backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)',
-          backgroundSize: '24px 24px',
-        }} />
+        <div className="absolute inset-0" style={{ opacity: 0.03, backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
 
         {/* Slide content */}
-        <div key={currentSlide} className="relative z-10 text-center max-w-lg animate-video-fade-in">
-          {/* Icon */}
+        <div key={currentSlide} className="relative text-center" style={{ maxWidth: '480px', zIndex: 10 }}>
           {slide.icon && (
-            <div className={`text-5xl mb-4 animate-video-bounce-in ${slide.color || 'text-blue-400'}`}>
+            <div style={{ fontSize: '48px', marginBottom: '16px', lineHeight: 1 }}>
               {slide.icon}
             </div>
           )}
-
-          {/* Title */}
           {slide.title && (
-            <h3 className="text-xl font-bold text-white mb-3 animate-video-slide-up">
+            <h3 style={{ fontSize: '20px', fontWeight: 700, color: '#fff', marginBottom: '12px' }}>
               {slide.title}
             </h3>
           )}
-
-          {/* Main text */}
-          <p className="text-lg text-gray-200 leading-relaxed animate-video-slide-up" style={{ animationDelay: '0.2s' }}>
+          <p style={{ fontSize: '16px', color: '#d1d5db', lineHeight: 1.6 }}>
             {slide.text}
           </p>
-
-          {/* Highlight */}
           {slide.highlight && (
-            <div className="mt-4 inline-block px-4 py-2 bg-white/10 rounded-lg border border-white/20 animate-video-slide-up" style={{ animationDelay: '0.4s' }}>
-              <code className="text-sm text-green-300">{slide.highlight}</code>
+            <div style={{ marginTop: '16px', display: 'inline-block', padding: '8px 16px', background: 'rgba(255,255,255,0.1)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.2)' }}>
+              <code style={{ fontSize: '14px', color: '#6ee7b7' }}>{slide.highlight}</code>
             </div>
           )}
         </div>
@@ -136,57 +126,48 @@ export default function TrainingVideoPlayer({ title, slides, autoPlay = false }:
       </div>
 
       {/* Controls bar */}
-      <div className="flex items-center justify-between px-4 py-3 bg-gray-800 border-t border-gray-700">
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-gray-400 truncate max-w-[200px]">{title}</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <button
-            onClick={restart}
-            className="p-1.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"
-            title="Restart"
-          >
-            <SkipBack className="w-4 h-4" />
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: '#1f2937', borderTop: '1px solid #374151' }}>
+        <span style={{ fontSize: '12px', color: '#9ca3af', maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{title}</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <button onClick={restart} style={btnStyle} title="Restart"><SkipBack className="w-4 h-4" /></button>
+          <button onClick={goPrev} disabled={isFirst} style={{ ...btnStyle, opacity: isFirst ? 0.3 : 1 }} title="Previous"><SkipBack className="w-3.5 h-3.5" /></button>
+          <button onClick={togglePlay} style={{ padding: '8px', background: '#2563eb', color: '#fff', borderRadius: '50%', border: 'none', cursor: 'pointer', margin: '0 4px' }} title={isPlaying ? 'Pause' : 'Play'}>
+            {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" style={{ marginLeft: 2 }} />}
           </button>
-          <button
-            onClick={goPrev}
-            disabled={isFirst}
-            className="p-1.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors disabled:opacity-30"
-            title="Previous"
-          >
-            <SkipBack className="w-3.5 h-3.5" />
-          </button>
-          <button
-            onClick={togglePlay}
-            className="p-2 bg-blue-600 text-white rounded-full hover:bg-blue-500 transition-colors mx-1"
-            title={isPlaying ? 'Pause' : 'Play'}
-          >
-            {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
-          </button>
-          <button
-            onClick={goNext}
-            disabled={isLast}
-            className="p-1.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors disabled:opacity-30"
-            title="Next"
-          >
-            <SkipForward className="w-3.5 h-3.5" />
-          </button>
-
-          {/* Dot indicators */}
-          <div className="flex items-center gap-1 ml-3">
+          <button onClick={goNext} disabled={isLast} style={{ ...btnStyle, opacity: isLast ? 0.3 : 1 }} title="Next"><SkipForward className="w-3.5 h-3.5" /></button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginLeft: '12px' }}>
             {slides.map((_, i) => (
               <button
                 key={i}
                 onClick={() => { setCurrentSlide(i); setProgress(0); }}
-                className={`w-2 h-2 rounded-full transition-all ${
-                  i === currentSlide ? 'bg-blue-500 w-4' : 'bg-gray-600 hover:bg-gray-500'
-                }`}
+                style={{
+                  width: i === currentSlide ? '16px' : '8px',
+                  height: '8px',
+                  borderRadius: '4px',
+                  background: i === currentSlide ? '#3b82f6' : '#4b5563',
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  padding: 0,
+                }}
               />
             ))}
           </div>
         </div>
-        <div className="w-16" /> {/* Spacer for symmetry */}
+        <div style={{ width: '64px' }} />
       </div>
     </div>
   );
 }
+
+const btnStyle: React.CSSProperties = {
+  padding: '6px',
+  color: '#9ca3af',
+  background: 'transparent',
+  border: 'none',
+  borderRadius: '6px',
+  cursor: 'pointer',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+};
