@@ -15,6 +15,9 @@ import recordRoutes from './routes/records';
 
 const app = express();
 
+// Trust proxy for rate limiting behind Railway/Vercel
+app.set('trust proxy', 1);
+
 // ─── Security Middleware ────────────────────────────────────────────
 
 app.use(helmet());
