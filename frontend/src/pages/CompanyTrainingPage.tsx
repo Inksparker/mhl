@@ -429,9 +429,17 @@ export default function CompanyTrainingPage() {
               {/* Expanded steps */}
               {isExpanded && (
                 <div className="border-t border-gray-100 px-5 py-4 bg-gray-50/50">
-                  {/* Video section */}
-                  {lesson.videoUrl ? (
-                    <div className="mb-4 rounded-xl overflow-hidden bg-black shadow-lg">
+                  {/* Direct video link for testing */}
+                  {lesson.videoUrl && (
+                    <div className="mb-3">
+                      <a
+                        href={lesson.videoUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm font-medium transition"
+                      >
+                        <Play className="w-4 h-4" /> Open Video in New Tab
+                      </a>
                       <video
                         key={lesson.videoUrl}
                         src={lesson.videoUrl}
@@ -440,14 +448,16 @@ export default function CompanyTrainingPage() {
                         muted
                         playsInline
                         loop
-                        className="w-full"
-                        style={{ maxHeight: '400px', display: 'block' }}
+                        className="w-full mt-3 rounded-xl"
+                        style={{ maxHeight: '360px', display: 'block', background: '#000' }}
                         preload="auto"
                       >
-                        <p>Your browser does not support video. <a href={lesson.videoUrl} target="_blank" rel="noreferrer">Download video</a></p>
+                        <p>Your browser cannot play this video.</p>
                       </video>
                     </div>
-                  ) : lesson.videoSlides ? (
+                  )}
+                  {/* Fallback slideshow if no video */}
+                  {!lesson.videoUrl && lesson.videoSlides ? (
                     <div className="mb-4">
                       <TrainingVideoPlayer
                         title={lesson.title}
