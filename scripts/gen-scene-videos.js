@@ -79,6 +79,16 @@ const trainingVideos = [
     ],
   },
   {
+    name: '02-navigate',
+    scenes: [
+      { text: 'Navigate your workspace using the left sidebar. It contains everything you need.', url: '/dashboard' },
+      { text: 'Dashboard shows your company statistics at a glance. Total files, storage used, and recent activity.', url: '/dashboard' },
+      { text: 'Files is where you manage and upload all your documents. Organize with folders and tags.', url: '/dashboard/files' },
+      { text: 'Data Records lets you work with structured data in custom tables for your company.', url: '/dashboard/records' },
+      { text: 'Companies, Users, and Settings are for administration. The company selector at the top switches views.', url: '/dashboard/companies' },
+    ],
+  },
+  {
     name: '03-upload',
     scenes: [
       { text: 'The Files page is where you manage all your documents. You can find it in the left sidebar.', url: '/dashboard/files' },
@@ -89,13 +99,58 @@ const trainingVideos = [
     ],
   },
   {
+    name: '04-organize',
+    scenes: [
+      { text: 'Good organization makes files easy to find. Use folders and tags to keep everything tidy.', url: '/dashboard/files' },
+      { text: 'Click any folder card to filter files within that folder. Each folder shows its file count.', url: '/dashboard/files' },
+      { text: 'Use the breadcrumb trail at the top to navigate back up through your folders. Click Root to return to the main view.', url: '/dashboard/files' },
+      { text: 'Tags are clickable filters. Click any tag on a file to see all files with that label. Clear the filter with the X button.', url: '/dashboard/files' },
+    ],
+  },
+  {
+    name: '05-search',
+    scenes: [
+      { text: 'Finding files is fast with the search bar at the top of the Files page.', url: '/dashboard/files' },
+      { text: 'Type any part of the filename and results update instantly as you type. No need to press Enter.', url: '/dashboard/files' },
+      { text: 'Combine search with tag filters for precise results. Clear all filters to start a fresh search.', url: '/dashboard/files' },
+      { text: 'If you cannot find something, clear all filters and try different search terms for better results.', url: '/dashboard/files' },
+    ],
+  },
+  {
+    name: '06-download',
+    scenes: [
+      { text: 'To download or delete files, hover over any file row to reveal action buttons.', url: '/dashboard/files' },
+      { text: 'Click the download icon to get your file. It is automatically decrypted before download.', url: '/dashboard/files' },
+      { text: 'To delete a file, click the trash icon and confirm. Files are soft deleted for safety.', url: '/dashboard/files' },
+      { text: 'Deleting files frees up storage space for your company. Contact admin for permanent deletion.', url: '/dashboard/files' },
+    ],
+  },
+  {
     name: '07-records',
     scenes: [
-      { text: 'Data Records lets you store structured data in custom tables. Access it from the left sidebar.', url: '/dashboard/records' },
-      { text: 'To create a new table, click the New Table button and enter a name like Contacts or Invoices.', url: '/dashboard/records' },
+      { text: 'Data Records lets you store structured data in custom tables. Access it from the left sidebar under Data Records.', url: '/dashboard/records' },
+      { text: 'To create a new table, click the New Table button at the top right and enter a name like Contacts or Invoices.', url: '/dashboard/records' },
       { text: 'Click Add Record and enter your data in JSON format. Each record can have different fields.', url: '/dashboard/records' },
       { text: 'Hover over any record to reveal edit and delete buttons. Use the copy button to duplicate records as templates.', url: '/dashboard/records' },
-      { text: 'The search bar above the records helps you find specific entries quickly by searching their JSON content.', url: '/dashboard/records' },
+      { text: 'The search bar above the records helps you find specific entries by searching their JSON content.', url: '/dashboard/records' },
+    ],
+  },
+  {
+    name: '08-storage',
+    scenes: [
+      { text: 'Your company has a storage limit set by your administrator. Monitor usage from the Dashboard or Settings.', url: '/dashboard' },
+      { text: 'The usage bar changes color as storage fills up. Blue means healthy, under seventy percent.', url: '/dashboard' },
+      { text: 'Amber is a warning at seventy to ninety percent. Time to clean up old files.', url: '/dashboard/settings' },
+      { text: 'Red means critical, over ninety percent. Uploads may be blocked. Contact your admin for more space.', url: '/dashboard/settings' },
+    ],
+  },
+  {
+    name: '09-security',
+    scenes: [
+      { text: 'OrgVault protects your data with enterprise-grade security. Let us review the protections.', url: '/dashboard/settings' },
+      { text: 'AES 256 GCM encryption scrambles every file before storage. No one can read your files without the key.', url: '/dashboard/settings' },
+      { text: 'Argon2id password hashing ensures no one can see your password, not even administrators.', url: '/dashboard/settings' },
+      { text: 'Your session lasts twenty four hours with automatic token rotation. Never share your password and always log out on shared computers.', url: '/dashboard/settings' },
     ],
   },
 ];
