@@ -5,8 +5,9 @@ import { useCompany } from '../hooks/useCompany';
 import {
   GraduationCap, ChevronDown, ChevronRight, CheckCircle2, Circle,
   Building2, Folder, Database, Upload, Search, Tag, Download, User,
-  ArrowRight, Play, Clock, BookOpen
+  ArrowRight, Play, Clock, BookOpen, Shield, Lock, HardDrive, FileText
 } from 'lucide-react';
+import TrainingVideoPlayer, { Slide } from '../components/TrainingVideoPlayer';
 
 interface Step {
   text: string;
@@ -20,6 +21,7 @@ interface Lesson {
   icon: React.ReactNode;
   goal: string;
   videoUrl?: string;
+  videoSlides?: Slide[];
   steps: Step[];
 }
 
@@ -36,6 +38,13 @@ const COMPANY_LESSONS: Lesson[] = [
       { text: 'Files you upload are visible to your entire company team' },
       { text: 'Only people in your company can see your company\'s files', link: { to: '/dashboard', label: 'Go to Dashboard →' } },
     ],
+    videoSlides: [
+      { icon: '🔐', text: 'Welcome to OrgVault — your company\'s secure storage platform', title: 'Welcome!', color: 'text-green-400' },
+      { icon: '🏢', text: 'Your company uses OrgVault to securely store and share files with your team', title: 'Your Company Vault', color: 'text-blue-400' },
+      { icon: '🔒', text: 'Every file is encrypted with AES-256-GCM — the same standard used by banks and governments', title: 'Bank-Grade Security', color: 'text-purple-400' },
+      { icon: '👥', text: 'Only people in your company can see your files. Other companies in your org cannot access your data.', title: 'Team Access Only', color: 'text-yellow-400' },
+      { icon: '✅', text: 'You\'re ready to get started! Follow the steps below to begin using OrgVault.', title: 'Ready to Go!', color: 'text-green-400' },
+    ],
   },
   {
     id: 'co-navigate',
@@ -48,6 +57,13 @@ const COMPANY_LESSONS: Lesson[] = [
       { text: 'Dashboard shows your company\'s stats at a glance', link: { to: '/dashboard', label: 'Open Dashboard →' } },
       { text: 'The company name in the header shows which company you\'re viewing' },
       { text: 'If you have access to multiple companies, use the dropdown to switch' },
+    ],
+    videoSlides: [
+      { icon: '🧭', text: 'Let\'s learn how to navigate your OrgVault workspace', title: 'Navigation Guide', color: 'text-blue-400' },
+      { icon: '📊', text: 'The Dashboard shows your company stats — files, storage used, and recent activity', title: 'Dashboard', color: 'text-green-400' },
+      { icon: '📁', text: 'Files is where you upload, organize, and find your documents', title: 'Files Page', color: 'text-yellow-400' },
+      { icon: '🗄️', text: 'Data Records lets you work with structured data in custom tables', title: 'Data Records', color: 'text-purple-400' },
+      { icon: '🏢', text: 'Use the company dropdown in the header to switch between company views', title: 'Company Selector', color: 'text-blue-400' },
     ],
   },
   {
@@ -63,6 +79,13 @@ const COMPANY_LESSONS: Lesson[] = [
       { text: 'Add comma-separated tags like "important, draft, client-x"' },
       { text: 'Upload a few test files to practice' },
     ],
+    videoSlides: [
+      { icon: '📤', text: 'Let\'s upload your first files to OrgVault', title: 'Uploading Files', color: 'text-blue-400' },
+      { icon: '🖱️', text: 'Drag and drop files from your computer onto the upload zone, or click to browse', title: 'Drag & Drop', color: 'text-green-400' },
+      { icon: '📂', text: 'Type a folder name like "invoices" or "reports/2024" to organize your files', title: 'Use Folders', color: 'text-yellow-400' },
+      { icon: '🏷️', text: 'Add comma-separated tags like "important, draft, client-x" for quick filtering', title: 'Add Tags', color: 'text-purple-400' },
+      { icon: '🔐', text: 'Your file is encrypted with AES-256 and stored securely', title: 'Encrypted!', color: 'text-green-400' },
+    ],
   },
   {
     id: 'co-organize',
@@ -75,6 +98,12 @@ const COMPANY_LESSONS: Lesson[] = [
       { text: 'Use the breadcrumb (Root › folder) to navigate back up' },
       { text: 'Click any tag on a file to filter by that tag' },
       { text: 'Click ✕ on the active tag to clear the filter' },
+    ],
+    videoSlides: [
+      { icon: '📂', text: 'Folders and tags make finding files easy', title: 'Stay Organized', color: 'text-green-400' },
+      { icon: '📁', text: 'Click any folder card to filter files within that folder', title: 'Folder Navigation', color: 'text-blue-400' },
+      { icon: '🏷️', text: 'Tags are clickable — click a tag to see all files with that label', title: 'Tag Filtering', color: 'text-yellow-400' },
+      { icon: '🔄', text: 'Use the breadcrumb trail to navigate back up through folders', title: 'Breadcrumb Trail', color: 'text-purple-400' },
     ],
   },
   {
@@ -89,6 +118,12 @@ const COMPANY_LESSONS: Lesson[] = [
       { text: 'Tags help categorize files — click a tag to see all files with that tag' },
       { text: 'If you can\'t find a file, clear all filters and search again' },
     ],
+    videoSlides: [
+      { icon: '🔍', text: 'The search bar finds files by name instantly', title: 'Quick Search', color: 'text-blue-400' },
+      { icon: '⌨️', text: 'Type any part of the filename — results update as you type', title: 'Live Results', color: 'text-green-400' },
+      { icon: '🏷️', text: 'Combine search with tag filters for laser-precise results', title: 'Combine Filters', color: 'text-yellow-400' },
+      { icon: '🧹', text: 'Can\'t find something? Clear all filters and try different search terms', title: 'Pro Tip', color: 'text-purple-400' },
+    ],
   },
   {
     id: 'co-download',
@@ -101,6 +136,12 @@ const COMPANY_LESSONS: Lesson[] = [
       { text: 'Click ⬇ to download — files are decrypted automatically' },
       { text: 'Click 🗑 to delete files you no longer need' },
       { text: 'Deleting files frees up storage for your company' },
+    ],
+    videoSlides: [
+      { icon: '⬇️', text: 'Hover over any file to reveal download and delete buttons', title: 'File Actions', color: 'text-blue-400' },
+      { icon: '📥', text: 'Click Download to get your file — it\'s automatically decrypted', title: 'Download Files', color: 'text-green-400' },
+      { icon: '🗑️', text: 'Click Delete and confirm to remove files you no longer need', title: 'Delete Files', color: 'text-red-400' },
+      { icon: '💾', text: 'Deleting files frees up storage — your company has a quota to manage', title: 'Frees Up Space', color: 'text-yellow-400' },
     ],
   },
   {
@@ -117,6 +158,12 @@ const COMPANY_LESSONS: Lesson[] = [
       { text: 'Hover over a record to edit ✏️ or delete 🗑' },
       { text: 'Use 📋 to copy record data when needed' },
     ],
+    videoSlides: [
+      { icon: '🗄️', text: 'Data Records is a flexible database for your company', title: 'Data Records', color: 'text-blue-400' },
+      { icon: '➕', text: 'Click Add Record and enter data in JSON format — each record is flexible', title: 'Adding Records', color: 'text-green-400' },
+      { icon: '✏️', text: 'Hover over any record to edit or delete it. Changes save instantly.', title: 'Edit & Delete', color: 'text-yellow-400' },
+      { icon: '📋', text: 'Use the Copy button to duplicate records as templates for new entries', title: 'Copy & Reuse', color: 'text-purple-400' },
+    ],
   },
   {
     id: 'co-storage',
@@ -130,6 +177,13 @@ const COMPANY_LESSONS: Lesson[] = [
       { text: 'If you hit the limit, uploads will be blocked — delete old files to free space' },
       { text: 'Contact your company admin if you need more storage' },
     ],
+    videoSlides: [
+      { icon: '📊', text: 'Your company has a storage limit set by your administrator', title: 'Storage Limits', color: 'text-blue-400' },
+      { icon: '📈', text: 'Check your Dashboard for current usage — the bar shows how full you are', title: 'Monitor Usage', color: 'text-yellow-400' },
+      { icon: '🔵', text: 'Blue = healthy (under 70%). Keep an eye on it as it grows.', title: 'Healthy', color: 'text-blue-400' },
+      { icon: '🟡', text: 'Amber = warning (70-90%). Time to clean up old files.', title: 'Getting Full', color: 'text-amber-400' },
+      { icon: '🔴', text: 'Red = critical (over 90%). Uploads may be blocked soon!', title: 'Almost Full', color: 'text-red-400' },
+    ],
   },
   {
     id: 'co-security',
@@ -142,6 +196,13 @@ const COMPANY_LESSONS: Lesson[] = [
       { text: 'Your password is hashed with Argon2id — no one can see it' },
       { text: 'Your session lasts 24 hours, then you need to log in again' },
       { text: 'Never share your password. Log out when using shared computers.' },
+    ],
+    videoSlides: [
+      { icon: '🔐', text: 'OrgVault protects your data with enterprise-grade security', title: 'Security First', color: 'text-green-400' },
+      { icon: '🔒', text: 'AES-256-GCM encryption — every file is scrambled before storage', title: 'File Encryption', color: 'text-blue-400' },
+      { icon: '🔑', text: 'Your password is hashed with Argon2id — no one can see it, not even admins', title: 'Password Protection', color: 'text-purple-400' },
+      { icon: '⏰', text: 'Sessions last 24 hours with automatic token rotation', title: 'Session Security', color: 'text-yellow-400' },
+      { icon: '✅', text: 'You\'re all set! Your data is safe and secure in OrgVault.', title: 'You\'re Protected!', color: 'text-green-400' },
     ],
   },
 ];
@@ -359,8 +420,16 @@ export default function CompanyTrainingPage() {
               {/* Expanded steps */}
               {isExpanded && (
                 <div className="border-t border-gray-100 px-5 py-4 bg-gray-50/50">
-                  {/* Video embed */}
-                  {lesson.videoUrl ? (
+                  {/* Video section */}
+                  {lesson.videoSlides ? (
+                    <div className="mb-4">
+                      <TrainingVideoPlayer
+                        title={lesson.title}
+                        slides={lesson.videoSlides}
+                        autoPlay={false}
+                      />
+                    </div>
+                  ) : lesson.videoUrl ? (
                     <div className="mb-4 aspect-video rounded-lg overflow-hidden bg-black">
                       <iframe
                         src={lesson.videoUrl}
