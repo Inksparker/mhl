@@ -487,13 +487,14 @@ export default function TrainingPage() {
         </div>
       ) : (
         <div className="space-y-4">
-          {modules.map((mod) => {
+          {modules.map((mod, modIndex) => {
             const modCompleted = mod.exercises.filter((e) => completed.has(e.id)).length;
             const modTotal = mod.exercises.length;
             const isExpanded = expandedModules.has(mod.id);
+            const isLastMod = modIndex === modules.length - 1;
 
             return (
-              <div key={mod.id} className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+              <div key={mod.id} id={`mod-${mod.id}`} className="bg-white rounded-xl border border-gray-200 overflow-hidden">
                 <button
                   onClick={() => toggleModule(mod.id)}
                   className="w-full flex items-center gap-4 px-6 py-4 hover:bg-gray-50 transition-colors text-left"
@@ -563,6 +564,42 @@ export default function TrainingPage() {
                         </div>
                       </div>
                     ))}
+
+                    {/* Module navigation */}
+                    <div className="px-6 py-3 border-t border-gray-100 bg-gray-50 flex items-center justify-between">
+                      {modIndex > 0 ? (
+                        <button
+                          onClick={() => {
+                            const prevId = modules[modIndex - 1]?.id;
+                            if (prevId) {
+                              setExpandedModules(new Set([prevId]));
+                              setTimeout(() => {
+                                document.getElementById(`mod-${prevId}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                              }, 100);
+                            }
+                          }}
+                          className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition"
+                        >
+                          <ArrowRight className="w-4 h-4 rotate-180" /> Previous Module
+                        </button>
+                      ) : <div />}
+                      {!isLastMod ? (
+                        <button
+                          onClick={() => {
+                            const nextId = modules[modIndex + 1]?.id;
+                            if (nextId) {
+                              setExpandedModules(new Set([nextId]));
+                              setTimeout(() => {
+                                document.getElementById(`mod-${nextId}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                              }, 100);
+                            }
+                          }}
+                          className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition shadow-sm ml-auto"
+                        >
+                          Next Module <ArrowRight className="w-4 h-4" />
+                        </button>
+                      ) : <div />}
+                    </div>
                   </div>
                 )}
               </div>
