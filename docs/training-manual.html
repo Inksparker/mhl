@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OrgVault — Training Manual</title>
+<style>
+  @page { margin: 22mm 18mm; size: A4; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; color: #1a1a2e; line-height: 1.7; max-width: 800px; margin: 0 auto; padding: 20px; }
+  h1 { color: #364fc7; border-bottom: 3px solid #364fc7; padding-bottom: 10px; font-size: 28px; }
+  h2 { color: #3b5bdb; border-bottom: 1px solid #dbe4ff; padding-bottom: 6px; margin-top: 36px; font-size: 22px; }
+  h3 { color: #4c6ef5; margin-top: 24px; font-size: 17px; }
+  .cover { text-align: center; padding: 60px 0 40px; }
+  .cover h1 { font-size: 36px; border: none; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th { background: #f0f4ff; text-align: left; padding: 10px 12px; font-weight: 600; color: #364fc7; }
+  td { padding: 8px 12px; border-bottom: 1px solid #e9ecef; }
+  .exercise { background: #f0fdf4; border: 2px solid #86efac; border-radius: 10px; padding: 18px 22px; margin: 20px 0; }
+  .exercise h3 { color: #15803d; margin-top: 0; font-size: 16px; }
+  .exercise .goal { font-weight: 600; color: #166534; }
+  .scenario { background: #fefce8; border-left: 4px solid #eab308; padding: 12px 16px; margin: 12px 0; border-radius: 0 6px 6px 0; font-size: 14px; }
+  .check { color: #15803d; font-weight: 700; }
+  .step { background: #f8f9fa; padding: 8px 14px; margin: 6px 0; border-radius: 6px; font-size: 14px; }
+  .step .num { display: inline-block; width: 24px; height: 24px; background: #4c6ef5; color: #fff; text-align: center; border-radius: 50%; font-size: 13px; line-height: 24px; margin-right: 8px; font-weight: 700; }
+  code { background: #f1f3f5; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+  .footer { text-align: center; color: #adb5bd; font-size: 11px; margin-top: 40px; border-top: 1px solid #e9ecef; padding-top: 16px; }
+  .module-header { background: linear-gradient(135deg, #364fc7, #4c6ef5); color: white; padding: 14px 20px; border-radius: 8px; margin-top: 30px; }
+  .module-header h2 { color: white; border: none; margin: 0; }
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 4px 0; }
+  .checklist li::before { content: "☐ "; color: #4c6ef5; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>📚 OrgVault</h1>
+  <div class="subtitle" style="color:#748ffc;font-size:18px;">Administrator Training Manual</div>
+  <div style="color:#adb5bd;font-size:13px;margin-top:8px;">Hands-on exercises for onboarding & system management</div>
+  <div style="color:#adb5bd;font-size:12px;margin-top:30px;">Version 1.0 · July 2026</div>
+</div>
+
+<h2>About This Manual</h2>
+<p>This training manual is designed for <strong>organization administrators</strong> who will manage OrgVault for their company. Each module contains a real-world scenario and hands-on exercises. Complete each exercise to build proficiency.</p>
+
+<p><strong>Prerequisites:</strong> A computer with a modern browser (Chrome, Edge, Firefox, or Safari). An OrgVault account with <strong>org_admin</strong> or <strong>superadmin</strong> role.</p>
+
+<p><strong>App URL:</strong> <code>https://storageapp.boosterappsolutions.com</code></p>
+
+<!-- ═══════════════════════════════════════════ -->
+<div class="module-header"><h2>MODULE 1: First-Time Setup</h2></div>
+
+<div class="scenario">
+  <strong>Scenario:</strong> You've just been given a superadmin account. You need to set up your organization, create companies for your business units, and add your first team members.
+</div>
+
+<div class="exercise">
+  <h3>Exercise 1.1 — Create Companies</h3>
+  <p class="goal">🎯 Goal: Create 3 companies for your organization.</p>
+  <div class="step"><span class="num">1</span> Log in and click <strong>Companies</strong> in the left sidebar</div>
+  <div class="step"><span class="num">2</span> Click <strong>"Add Company"</strong></div>
+  <div class="step"><span class="num">3</span> Create these companies one at a time: <strong>Alpha Division</strong>, <strong>Beta Division</strong>, <strong>Gamma Division</strong></div>
+  <ul class="checklist">
+    <li>Alpha Division created</li>
+    <li>Beta Division created</li>
+    <li>Gamma Division created</li>
+  </ul>
+</div>
+
+<div class="exercise">
+  <h3>Exercise 1.2 — Add Team Members</h3>
+  <p class="goal">🎯 Goal: Create 4 users with different roles and company assignments.</p>
+  <div class="step"><span class="num">1</span> Click <strong>Users</strong> in the sidebar</div>
+  <div class="step"><span class="num">2</span> Click <strong>"Add User"</strong> and create:</div>
+  <table>
+    <tr><th>Name</th><th>Email</th><th>Password</th><th>Role</th><th>Company</th></tr>
+    <tr><td>Alpha Manager</td><td>alpha.manager@yourcompany.com</td><td>SecurePass123</td><td>company_admin</td><td>Alpha Division</td></tr>
+    <tr><td>Beta Manager</td><td>beta.manager@yourcompany.com</td><td>SecurePass123</td><td>company_admin</td><td>Beta Division</td></tr>
+    <tr><td>Team Member A</td><td>member.a@yourcompany.com</td><td>SecurePass123</td><td>member</td><td>Alpha Division</td></tr>
+    <tr><td>Viewer Account</td><td>viewer@yourcompany.com</td><td>SecurePass123</td><td>viewer</td><td>—</td></tr>
+  </table>
+  <ul class="checklist">
+    <li>4 users created with correct roles</li>
+    <li>Company admins assigned to correct companies</li>
+  </ul>
+</div>
+
+<div class="exercise">
+  <h3>Exercise 1.3 — Set Storage Quotas</h3>
+  <p class="goal">🎯 Goal: Set a 20 GB org quota and per-company limits.</p>
+  <div class="step"><span class="num">1</span> Go to <strong>Settings</strong></div>
+  <div class="step"><span class="num">2</span> In <strong>Storage Quota</strong>, set Organization Total to <strong>20 GB</strong></div>
+  <div class="step"><span class="num">3</span> Set company quotas: Alpha → 10 GB, Beta → 5 GB, Gamma → 5 GB</div>
+  <ul class="checklist">
+    <li>Org quota shows 20 GB</li>
+    <li>Each company quota set</li>
+    <li>Usage bar visible and at 0%</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<div class="module-header"><h2>MODULE 2: File Management</h2></div>
+
+<div class="scenario">
+  <strong>Scenario:</strong> Your team needs to store and organize business documents securely. You'll upload files, organize them with folders and tags, and verify company-scoped access.
+</div>
+
+<div class="exercise">
+  <h3>Exercise 2.1 — Upload & Organize</h3>
+  <p class="goal">🎯 Goal: Upload 3 files with folder and tag organization.</p>
+  <div class="step"><span class="num">1</span> Go to <strong>Files</strong></div>
+  <div class="step"><span class="num">2</span> Upload a file to folder <code>reports/2024</code> with tag <code>confidential</code></div>
+  <div class="step"><span class="num">3</span> Upload a file to folder <code>invoices</code> with tag <code>billing</code></div>
+  <div class="step"><span class="num">4</span> Upload a file with no folder and tag <code>general</code></div>
+  <ul class="checklist">
+    <li>3 files uploaded successfully</li>
+    <li>Folders appear in the folder grid with file counts</li>
+    <li>Tags visible on files</li>
+  </ul>
+</div>
+
+<div class="exercise">
+  <h3>Exercise 2.2 — Navigate & Filter</h3>
+  <p class="goal">🎯 Goal: Use folder breadcrumbs, tag filtering, and search.</p>
+  <div class="step"><span class="num">1</span> Click the <strong>reports/2024</strong> folder — verify only the reports file appears</div>
+  <div class="step"><span class="num">2</span> Click <strong>Root</strong> in the breadcrumb to go back</div>
+  <div class="step"><span class="num">3</span> Click the <strong>confidential</strong> tag on a file — verify filtered view</div>
+  <div class="step"><span class="num">4</span> Use the search bar to find a file by name</div>
+  <ul class="checklist">
+    <li>Folder navigation works with breadcrumbs</li>
+    <li>Tag filter shows only matching files</li>
+    <li>Search returns correct results</li>
+  </ul>
+</div>
+
+<div class="exercise">
+  <h3>Exercise 2.3 — Test Company Isolation</h3>
+  <p class="goal">🎯 Goal: Verify that users only see their company's files.</p>
+  <div class="step"><span class="num">1</span> As admin, switch the company dropdown to <strong>Alpha Division</strong></div>
+  <div class="step"><span class="num">2</span> Upload a file — it should be scoped to Alpha Division</div>
+  <div class="step"><span class="num">3</span> Switch to <strong>Beta Division</strong> — the Alpha file should not appear</div>
+  <div class="step"><span class="num">4</span> Switch to <strong>All Companies</strong> — both files should appear</div>
+  <ul class="checklist">
+    <li>Files filtered correctly per company</li>
+    <li>All Companies shows combined view</li>
+  </ul>
+</div>
+
+<div class="exercise">
+  <h3>Exercise 2.4 — Download & Delete</h3>
+  <p class="goal">🎯 Goal: Download a decrypted file and soft-delete another.</p>
+  <div class="step"><span class="num">1</span> Hover over a file and click ⬇ Download</div>
+  <div class="step"><span class="num">2</span> Verify the downloaded file opens correctly</div>
+  <div class="step"><span class="num">3</span> Hover over another file and click 🗑 Delete</div>
+  <div class="step"><span class="num">4</span> Confirm deletion — verify the file disappears from the list</div>
+  <ul class="checklist">
+    <li>Downloaded file is intact and readable</li>
+    <li>Deleted file removed from view</li>
+    <li>Storage usage updated after delete</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<div class="module-header"><h2>MODULE 3: Data Records</h2></div>
+
+<div class="scenario">
+  <strong>Scenario:</strong> Your team tracks client contacts and invoices. You need to create structured data tables and manage records.
+</div>
+
+<div class="exercise">
+  <h3>Exercise 3.1 — Create Tables</h3>
+  <p class="goal">🎯 Goal: Create two data tables.</p>
+  <div class="step"><span class="num">1</span> Go to <strong>Data Records</strong></div>
+  <div class="step"><span class="num">2</span> Click <strong>"New Table"</strong> → name it <strong>Clients</strong> → Create</div>
+  <div class="step"><span class="num">3</span> Click <strong>"New Table"</strong> → name it <strong>Invoices</strong> → Create</div>
+  <ul class="checklist">
+    <li>Both tables appear in the left panel</li>
+  </ul>
+</div>
+
+<div class="exercise">
+  <h3>Exercise 3.2 — CRUD Operations</h3>
+  <p class="goal">🎯 Goal: Create, read, update, and delete records.</p>
+  <div class="step"><span class="num">1</span> Select <strong>Clients</strong> → click <strong>"Add Record"</strong></div>
+  <div class="step"><span class="num">2</span> Enter: <code>{"name":"Acme Corp","contact":"Jane Smith","email":"jane@acme.com","phone":"+2348000000001"}</code> → Create</div>
+  <div class="step"><span class="num">3</span> Add a second record: <code>{"name":"Globex","contact":"John Doe","email":"john@globex.com"}</code></div>
+  <div class="step"><span class="num">4</span> Edit the first record: hover → ✏️ → change phone → Update</div>
+  <div class="step"><span class="num">5</span> Delete the second record: hover → 🗑 → confirm</div>
+  <ul class="checklist">
+    <li>2 records created</li>
+    <li>Phone number updated successfully</li>
+    <li>1 record deleted</li>
+    <li>1 record remaining</li>
+  </ul>
+</div>
+
+<div class="exercise">
+  <h3>Exercise 3.3 — Search & Copy</h3>
+  <p class="goal">🎯 Goal: Search records and copy data.</p>
+  <div class="step"><span class="num">1</span> Use the search bar above records to find "Acme"</div>
+  <div class="step"><span class="num">2</span> Hover over the record and click 📋 to copy the JSON data</div>
+  <div class="step"><span class="num">3</span> Paste into a text editor to verify the copied data is correct</div>
+  <ul class="checklist">
+    <li>Search filters correctly</li>
+    <li>Copied JSON is valid and complete</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<div class="module-header"><h2>MODULE 4: User & Role Management</h2></div>
+
+<div class="scenario">
+  <strong>Scenario:</strong> A team member changes roles and a new hire needs access. You'll update user roles, reassign companies, and deactivate departed users.
+</div>
+
+<div class="exercise">
+  <h3>Exercise 4.1 — Promote a User</h3>
+  <p class="goal">🎯 Goal: Promote "Team Member A" to company_admin.</p>
+  <div class="step"><span class="num">1</span> Go to <strong>Users</strong></div>
+  <div class="step"><span class="num">2</span> Find <strong>Team Member A</strong></div>
+  <div class="step"><span class="num">3</span> Hover → ✏️ → change role to <strong>company_admin</strong> → 💾 Save</div>
+  <ul class="checklist">
+    <li>Role badge updates to company_admin color</li>
+  </ul>
+</div>
+
+<div class="exercise">
+  <h3>Exercise 4.2 — Reassign Company</h3>
+  <p class="goal">🎯 Goal: Move "Viewer Account" to Beta Division.</p>
+  <div class="step"><span class="num">1</span> Find <strong>Viewer Account</strong></div>
+  <div class="step"><span class="num">2</span> Hover → ✏️ → select <strong>Beta Division</strong> → 💾 Save</div>
+  <ul class="checklist">
+    <li>Company column shows Beta Division</li>
+  </ul>
+</div>
+
+<div class="exercise">
+  <h3>Exercise 4.3 — Deactivate a User</h3>
+  <p class="goal">🎯 Goal: Deactivate "Viewer Account" and verify they can't log in.</p>
+  <div class="step"><span class="num">1</span> Find <strong>Viewer Account</strong></div>
+  <div class="step"><span class="num">2</span> Hover → 🗑 → confirm deactivation</div>
+  <div class="step"><span class="num">3</span> Try logging in with viewer credentials — should fail</div>
+  <ul class="checklist">
+    <li>User removed from active list</li>
+    <li>Login rejected for deactivated user</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<div class="module-header"><h2>MODULE 5: Quota Management</h2></div>
+
+<div class="scenario">
+  <strong>Scenario:</strong> Alpha Division is growing fast and needs more storage. You need to increase their quota while monitoring overall usage.
+</div>
+
+<div class="exercise">
+  <h3>Exercise 5.1 — Adjust Quotas</h3>
+  <p class="goal">🎯 Goal: Increase Alpha's quota and verify the change.</p>
+  <div class="step"><span class="num">1</span> Go to <strong>Settings</strong> → Storage Quota</div>
+  <div class="step"><span class="num">2</span> Increase <strong>Alpha Division</strong> to 15 GB → Set</div>
+  <div class="step"><span class="num">3</span> Verify the organization usage bar is still accurate</div>
+  <ul class="checklist">
+    <li>Alpha quota shows 15 GB</li>
+    <li>Total org quota (20 GB) unchanged</li>
+  </ul>
+</div>
+
+<div class="exercise">
+  <h3>Exercise 5.2 — Understand the Usage Bar</h3>
+  <p class="goal">🎯 Goal: Upload files until the usage bar changes color.</p>
+  <div class="step"><span class="num">1</span> Upload files and watch the usage bar</div>
+  <div class="step"><span class="num">2</span> Note when the bar turns from blue → amber (>70%)</div>
+  <div class="step"><span class="num">3</span> Note when the bar turns from amber → red (>90%)</div>
+  <ul class="checklist">
+    <li>Usage percentage updates after each upload</li>
+    <li>Color changes at correct thresholds</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<div class="module-header"><h2>MODULE 6: Security & Audit</h2></div>
+
+<div class="scenario">
+  <strong>Scenario:</strong> You're responsible for data security. You need to understand the security features and verify they're active.
+</div>
+
+<div class="exercise">
+  <h3>Exercise 6.1 — Verify Encryption</h3>
+  <p class="goal">🎯 Goal: Confirm files are encrypted at rest.</p>
+  <div class="step"><span class="num">1</span> Upload a small text file</div>
+  <div class="step"><span class="num">2</span> Note the original size vs encrypted size (e.g., 18 B → 82 B)</div>
+  <div class="step"><span class="num">3</span> Download the file and verify contents are identical</div>
+  <ul class="checklist">
+    <li>Encrypted size is larger than original</li>
+    <li>Decrypted download matches original</li>
+  </ul>
+</div>
+
+<div class="exercise">
+  <h3>Exercise 6.2 — Review Security Settings</h3>
+  <p class="goal">🎯 Goal: Check that all security features are active.</p>
+  <div class="step"><span class="num">1</span> Go to <strong>Settings</strong></div>
+  <div class="step"><span class="num">2</span> In the <strong>Security</strong> section, verify:</div>
+  <ul class="checklist">
+    <li>Encryption at Rest: ✅ Active (AES-256-GCM)</li>
+    <li>JWT Authentication: ✅ Active (24h tokens)</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<div class="module-header"><h2>MODULE 7: Troubleshooting</h2></div>
+
+<table>
+  <tr><th>Problem</th><th>Solution</th></tr>
+  <tr><td>Can't log in</td><td>Check caps lock. Passwords are case-sensitive. Use "Forgot password" or contact admin.</td></tr>
+  <tr><td>"Not found" error on login</td><td>Hard refresh (Ctrl+Shift+R). If persists, check internet connection.</td></tr>
+  <tr><td>Upload blocked — quota exceeded</td><td>Go to Settings → increase quota, or delete unused files to free space.</td></tr>
+  <tr><td>Company selector not showing</td><td>You need companies created first. Go to Companies → Add Company.</td></tr>
+  <tr><td>Can't edit users or settings</td><td>You need org_admin or superadmin role. Contact your admin.</td></tr>
+  <tr><td>Files missing after switching companies</td><td>Files are scoped to companies. Switch to "All Companies" to see everything.</td></tr>
+  <tr><td>Record JSON won't save</td><td>Ensure your JSON is valid — check for missing commas, quotes, or braces.</td></tr>
+</table>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>Completion Checklist</h2>
+
+<p>After completing all modules, you should be able to:</p>
+<ul class="checklist">
+  <li>Create and manage companies</li>
+  <li>Add, edit, and deactivate users with proper roles</li>
+  <li>Upload, organize, search, download, and delete files</li>
+  <li>Use folders, tags, and company selector for data isolation</li>
+  <li>Create data tables and perform full CRUD on records</li>
+  <li>Set and adjust storage quotas at org and company levels</li>
+  <li>Monitor storage usage with the usage bar</li>
+  <li>Verify encryption and security features</li>
+  <li>Troubleshoot common issues</li>
+</ul>
+
+<div class="footer">
+  <p>OrgVault · Administrator Training Manual · Version 1.0 · July 2026</p>
+  <p>https://storageapp.boosterappsolutions.com</p>
+</div>
+</body>
+</html>

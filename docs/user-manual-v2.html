@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OrgVault — User Manual v2.0</title>
+<style>
+  @page { margin: 22mm 18mm; size: A4; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; color: #1a1a2e; line-height: 1.7; max-width: 800px; margin: 0 auto; padding: 20px; }
+  h1 { color: #364fc7; border-bottom: 3px solid #364fc7; padding-bottom: 10px; font-size: 28px; }
+  h2 { color: #3b5bdb; border-bottom: 1px solid #dbe4ff; padding-bottom: 6px; margin-top: 32px; font-size: 22px; }
+  h3 { color: #4c6ef5; margin-top: 24px; font-size: 17px; }
+  .cover { text-align: center; padding: 60px 0 40px; }
+  .cover h1 { font-size: 36px; border: none; }
+  .cover .subtitle { color: #748ffc; font-size: 18px; margin-top: 8px; }
+  .cover .version { color: #adb5bd; font-size: 13px; margin-top: 30px; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th { background: #f0f4ff; text-align: left; padding: 10px 12px; font-weight: 600; color: #364fc7; }
+  td { padding: 8px 12px; border-bottom: 1px solid #e9ecef; }
+  tr:hover td { background: #f8f9ff; }
+  .tip { background: #f0f4ff; border-left: 4px solid #4c6ef5; padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; font-size: 14px; }
+  .warning { background: #fff9db; border-left: 4px solid #f08c00; padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; font-size: 14px; }
+  .step { background: #f8f9fa; padding: 8px 14px; margin: 6px 0; border-radius: 6px; font-size: 14px; }
+  .step .num { display: inline-block; width: 24px; height: 24px; background: #4c6ef5; color: #fff; text-align: center; border-radius: 50%; font-size: 13px; line-height: 24px; margin-right: 8px; font-weight: 700; }
+  code { background: #f1f3f5; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+  .toc { background: #f8f9fa; padding: 20px 24px; border-radius: 8px; margin: 20px 0; }
+  .role-badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+  .footer { text-align: center; color: #adb5bd; font-size: 11px; margin-top: 40px; border-top: 1px solid #e9ecef; padding-top: 16px; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>🔐 OrgVault</h1>
+  <div class="subtitle">Hybrid Secure Data Storage — User Manual</div>
+  <div class="version">Version 2.0 · July 2026</div>
+</div>
+
+<div class="toc">
+  <strong>Contents</strong>
+  <ol>
+    <li>Getting Started — Login & Registration</li>
+    <li>Dashboard Overview</li>
+    <li>File Management — Upload, Organize, Search</li>
+    <li>Data Records — Structured Data Tables</li>
+    <li>Companies — Multi-Tenant Management</li>
+    <li>User Management — Roles & Permissions</li>
+    <li>Storage Quotas — Limits & Monitoring</li>
+    <li>Organization Settings</li>
+    <li>Security Features</li>
+    <li>Roles & Permissions Reference</li>
+  </ol>
+</div>
+
+<h2>1. Getting Started</h2>
+
+<h3>Accessing OrgVault</h3>
+<p>Open your browser and go to: <code>https://storageapp.boosterappsolutions.com</code></p>
+
+<h3>Creating an Account</h3>
+<div class="step"><span class="num">1</span> On the login page, click <strong>"Don't have an account? Create one"</strong></div>
+<div class="step"><span class="num">2</span> Enter your <strong>Full Name</strong>, <strong>Organization Name</strong>, <strong>Email</strong>, and <strong>Password</strong> (min. 12 characters)</div>
+<div class="step"><span class="num">3</span> Click <strong>"Create Account"</strong> — you'll be logged in automatically</div>
+<div class="tip"><strong>Note:</strong> The first person to register with an organization name becomes the Organization Admin.</div>
+
+<h3>Logging In</h3>
+<div class="step"><span class="num">1</span> Enter your <strong>Email</strong> and <strong>Password</strong></div>
+<div class="step"><span class="num">2</span> Click <strong>"Sign In"</strong></div>
+<p>Sessions last 24 hours. Log out via the <strong>"Sign Out"</strong> button at the bottom of the sidebar.</p>
+
+<h2>2. Dashboard</h2>
+<p>The Dashboard is your home screen, showing a real-time overview of your organization's storage.</p>
+
+<h3>Stats Cards</h3>
+<table>
+  <tr><th>Card</th><th>Meaning</th></tr>
+  <tr><td>Total Files</td><td>Number of files across your org or selected company</td></tr>
+  <tr><td>Folders</td><td>Number of organizational folders</td></tr>
+  <tr><td>Storage Used</td><td>Total space consumed (auto-formatted: B → KB → MB → GB)</td></tr>
+  <tr><td>Synced to Cloud</td><td>Files backed up to cloud storage</td></tr>
+</table>
+
+<h3>Recent Files</h3>
+<p>Shows your 5 most recent uploads. Click <strong>"View all →"</strong> to go to the Files page.</p>
+
+<h3>Company Selector</h3>
+<p>In the top-right header, use the <strong>company dropdown</strong> to switch between company views. Select "All Companies" to see everything, or pick a specific company to scope all views.</p>
+
+<h2>3. File Management</h2>
+<p>Access via <strong>Files</strong> in the left sidebar.</p>
+
+<h3>Uploading Files</h3>
+<div class="step"><span class="num">1</span> <strong>Drag & Drop</strong> files onto the dashed zone, or click to browse</div>
+<div class="step"><span class="num">2</span> Optionally assign a <strong>folder</strong> (e.g., <code>invoices/2024</code>) and <strong>tags</strong> (comma-separated)</div>
+<div class="step"><span class="num">3</span> Files are encrypted with AES-256-GCM before storage</div>
+<div class="warning"><strong>Limits:</strong> 500 MB max per file. Upload blocked if storage quota is exceeded.</div>
+
+<h3>Folder Navigation</h3>
+<p>Click a folder card to filter files within it. Use the breadcrumb trail (<code>Root › invoices › 2024</code>) to navigate back.</p>
+
+<h3>Tag Filtering</h3>
+<p>Click any tag on a file to filter the list by that tag. Remove the filter by clicking ✕ on the active tag pill.</p>
+
+<h3>Search</h3>
+<p>Use the search bar to find files by name. Results update as you type.</p>
+
+<h3>Download & Delete</h3>
+<p>Hover over a file row to reveal action buttons: ⬇ Download (decrypted) and 🗑 Delete (soft-delete, recoverable).</p>
+
+<h2>4. Data Records</h2>
+<p>Store structured data in custom tables. Access via <strong>Data Records</strong> in the sidebar.</p>
+
+<h3>Creating a Table</h3>
+<div class="step"><span class="num">1</span> Click <strong>"New Table"</strong></div>
+<div class="step"><span class="num">2</span> Enter a name (e.g., <code>Contacts</code>, <code>Invoices</code>)</div>
+<div class="step"><span class="num">3</span> Press Enter or click <strong>"Create"</strong></div>
+
+<h3>Working with Records</h3>
+<p><strong>Add:</strong> Select a table → click <strong>"Add Record"</strong> → enter JSON data → Create</p>
+<p><strong>Edit:</strong> Hover a record → ✏️ → modify JSON → Update</p>
+<p><strong>Delete:</strong> Hover a record → 🗑 → confirm</p>
+<p><strong>Copy:</strong> Use the 📋 button to copy record IDs or JSON data</p>
+
+<div class="tip"><strong>Example record:</strong> <code>{"name": "John Doe", "email": "john@example.com", "phone": "+234 800 000 0000"}</code></div>
+
+<h2>5. Companies</h2>
+<p>Companies are sub-tenants within your organization for data isolation. Access via <strong>Companies</strong> in the sidebar.</p>
+
+<h3>Adding a Company</h3>
+<div class="step"><span class="num">1</span> Click <strong>"Add Company"</strong></div>
+<div class="step"><span class="num">2</span> Enter the company name</div>
+<div class="step"><span class="num">3</span> Click <strong>"Create"</strong></div>
+
+<p>Once created, you can assign users to this company, set storage quotas, and files will be scoped.</p>
+
+<h2>6. User Management</h2>
+<p>Access via <strong>Users</strong> in the sidebar. Available to org_admin and superadmin roles only.</p>
+
+<h3>Adding Users</h3>
+<div class="step"><span class="num">1</span> Click <strong>"Add User"</strong></div>
+<div class="step"><span class="num">2</span> Fill in name, email, password</div>
+<div class="step"><span class="num">3</span> Select a <strong>role</strong> and optionally assign to a <strong>company</strong></div>
+<div class="step"><span class="num">4</span> Click <strong>"Create User"</strong></div>
+
+<h3>Editing Users</h3>
+<p>Hover a user row → click ✏️ → change their <strong>role</strong> or <strong>company</strong> inline → click 💾 to save.</p>
+
+<h3>Deactivating Users</h3>
+<p>Hover a user row → click 🗑 → confirm. They can no longer log in, but their data is preserved.</p>
+
+<h2>7. Storage Quotas</h2>
+<p>Access via <strong>Settings</strong> → <strong>Storage Quota</strong> section.</p>
+
+<h3>Organization Quota</h3>
+<p>A colored usage bar shows current consumption. Enter a value in GB and click <strong>"Set Quota"</strong>. Set to 0 for unlimited.</p>
+
+<h3>Company Quotas</h3>
+<p>Each company can have its own limit. Enter GB per company → click <strong>"Set"</strong>. Companies with no limit set have unlimited storage (capped only by the org quota).</p>
+
+<div class="tip"><strong>Who controls quotas:</strong> Only org_admin and superadmin can set quotas. Company admins and members can view usage but can't change limits.</div>
+
+<h2>8. Organization Settings</h2>
+<p>Access via <strong>Settings</strong> in the sidebar.</p>
+
+<table>
+  <tr><th>Section</th><th>What you can do</th></tr>
+  <tr><td>General</td><td>Change organization name, view organization ID</td></tr>
+  <tr><td>Storage Quota</td><td>Set org and per-company storage limits with usage bars</td></tr>
+  <tr><td>Security</td><td>View encryption and authentication status (read-only)</td></tr>
+  <tr><td>Danger Zone</td><td>Delete organization (restricted)</td></tr>
+</table>
+
+<h2>9. Security</h2>
+<ul>
+  <li><strong>Encryption:</strong> AES-256-GCM at rest, unique per-file keys via PBKDF2</li>
+  <li><strong>Passwords:</strong> Argon2id hashing — industry standard</li>
+  <li><strong>Sessions:</strong> 24h access tokens + 7d rotating refresh tokens</li>
+  <li><strong>Rate Limiting:</strong> Brute-force protection on login endpoints</li>
+  <li><strong>Audit Logging:</strong> All mutations logged with user ID, IP, and timestamp</li>
+  <li><strong>Data Isolation:</strong> Org-scoped queries, company-level filtering</li>
+</ul>
+
+<h2>10. Roles & Permissions</h2>
+
+<table>
+  <tr><th>Role</th><th>Badge Color</th><th>Capabilities</th></tr>
+  <tr><td><strong>Superadmin</strong></td><td><span class="role-badge" style="background:#ffe3e3;color:#c92a2a;">superadmin</span></td><td>Full access across all orgs. Create superadmins, delete orgs, set quotas.</td></tr>
+  <tr><td><strong>Org Admin</strong></td><td><span class="role-badge" style="background:#e5dbff;color:#6741d9;">org_admin</span></td><td>Manage org: users, companies, quotas, all data. Cannot create superadmins.</td></tr>
+  <tr><td><strong>Company Admin</strong></td><td><span class="role-badge" style="background:#d0ebff;color:#1864ab;">company_admin</span></td><td>Manage their company: files, records, users in that company.</td></tr>
+  <tr><td><strong>Member</strong></td><td><span class="role-badge" style="background:#d3f9d8;color:#2b8a3e;">member</span></td><td>Upload files, create records, edit own data.</td></tr>
+  <tr><td><strong>Viewer</strong></td><td><span class="role-badge" style="background:#e9ecef;color:#495057;">viewer</span></td><td>Read-only: view files and records, cannot modify.</td></tr>
+</table>
+
+<div class="footer">
+  <p>OrgVault · Hybrid Secure Data Storage · Version 2.0 · July 2026</p>
+  <p>https://storageapp.boosterappsolutions.com</p>
+</div>
+</body>
+</html>
