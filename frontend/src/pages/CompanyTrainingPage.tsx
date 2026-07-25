@@ -444,8 +444,6 @@ export default function CompanyTrainingPage() {
                         key={lesson.videoUrl}
                         src={lesson.videoUrl}
                         controls
-                        autoPlay
-                        muted
                         playsInline
                         loop
                         className="w-full mt-3 rounded-xl"
