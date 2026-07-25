@@ -12,6 +12,7 @@ import RecordsPage from './pages/RecordsPage';
 import CompaniesPage from './pages/CompaniesPage';
 import UsersPage from './pages/UsersPage';
 import SettingsPage from './pages/SettingsPage';
+import TrainingPage from './pages/TrainingPage';
 import './index.css';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -80,6 +81,7 @@ function AppRoutes() {
         <Route path="companies" element={<CompaniesPage />} />
         <Route path="users" element={<UsersPage />} />
         <Route path="settings" element={<SettingsPage />} />
+        <Route path="training" element={<TrainingPage />} />
       </Route>
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>

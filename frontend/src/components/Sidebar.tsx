@@ -2,7 +2,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import {
   Shield, LogOut, Menu, X, Home, Folder, Database,
-  Settings, Building2, Users
+  Settings, Building2, Users, GraduationCap
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -27,6 +27,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     { to: '/dashboard/companies', icon: Building2, label: 'Companies' },
     { to: '/dashboard/users', icon: Users, label: 'Users' },
     { to: '/dashboard/settings', icon: Settings, label: 'Settings' },
+    { to: '/dashboard/training', icon: GraduationCap, label: 'Training' },
   ];
 
   const isActive = (to: string) => {
